@@ -1,0 +1,20 @@
+library(tidyverse)
+
+d1 <- read_delim("figures and tables/Quartile Tables/2020_04_23 2123 - PDCL15 KRSA UKA KEA PTM_SEA into Quadrant_Edited.txt",
+                 delim = "\t", na = c("#N/A")
+                 )
+
+pdf("output/figures/QuartileFigure.pdf", height = 10, useDingbats=FALSE)
+
+d1 %>% pivot_longer(3:ncol(.), names_to = "Tool", values_to = "Quartile") %>% 
+  mutate(Tool = gsub("_Quartile", "", Tool ), Family = gsub(" Family", "", `Kinase Family`)) %>% 
+  ggplot(aes(reorder(Kinase, Family), Tool)) + geom_point(aes(size = Quartile)) +
+  coord_flip() + 
+  scale_size(trans = "reverse", range = c(1,5), breaks = c(1,2,3,4)) +
+  #geom_text(position = position_dodge(width = 1), aes(x=`Kinase Family`, y=5, label = `Kinase Family`)) +
+  theme_bw() + facet_grid(Family ~ ., scales = "free", space = "free") +
+  labs(x = "", y = "")
+
+dev.off()
+
+  
