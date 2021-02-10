@@ -2,22 +2,19 @@
 % Please edit documentation in R/read_krsa.R
 \name{read_krsa}
 \alias{read_krsa}
-\title{Read KRSA table}
+\title{Reads and Rank KRSA table}
 \usage{
-read_krsa()
+read_krsa(df)
 }
 \arguments{
-\item{df}{dataframe}
+\item{df}{dataframe, KRSA table output (requires at least Kinase and Z columns)}
 }
 \value{
-dataframe
+dataframe, Ranked and quartiled KRSA table
 }
 \description{
-`read_krsa` read krsa table and check for correct format
+reads KRSA table and checks for correct format
 }
 \details{
-This is a generic function: methods can be defined for it directly
-or via the [Summary()] group generic. For this to work properly,
-the arguments `...` should be unnamed, and dispatch is on the
-first argument.
+This function takes in KRSA table and rank and quartile kinases based on the absolute Score values
 }

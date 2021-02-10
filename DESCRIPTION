@@ -5,6 +5,7 @@ Version: 0.1.0
 Author: Khaled Alganem
 Maintainer: Khaled Alganem <khaled.a.alganem@gmail.com>
 Description: Combine kinome results from KRSA and UKA
+    A package for intergating upstream kinases anlayses
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
