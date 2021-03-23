@@ -9,7 +9,8 @@
 #' @return dataframe, mapped table
 #'
 
-read_uka <- function(df) {
+map_kinases <- function(df) {
 
+  df
 
 }
