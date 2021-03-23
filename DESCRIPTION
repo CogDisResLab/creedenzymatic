@@ -9,5 +9,10 @@ Description: Combine kinome results from KRSA and UKA
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
-Imports: tidyverse
+Imports: 
+  tidyverse
+  httr
+  jsonlite
 RoxygenNote: 7.1.1
+Depends: 
+    R (>= 2.10)

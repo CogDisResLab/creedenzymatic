@@ -4,27 +4,31 @@
 #'
 #' This function takes KRSA and UKA ranked tables and generate a quartile figure
 #'
-#' @param df1 dataframe, UKA ranked table
-#' @param df2 dataframe, KRSA ranked table
+#' @param df dataframe, combined mapped tables
+#' @param kinases dataframe, KRSA ranked table
 #'
 #' @return ggplot figure
 #'
 
-quartile_figure <- function(df, df2) {
+quartile_figure <- function(df, kinases) {
 
 
-  d1 <- rbind(df, df2)
+  df %>%
+    select(Uniprot_Gene, KinaseFamily, Qrt, Method) %>%
+    pivot_wider(names_from = Method, values_from = Qrt) %>%
+    pivot_longer(3:4, names_to = "Method", values_to = "Qrt") %>%
 
-  d1 %>% pivot_longer(3:ncol(.), names_to = "Tool", values_to = "Quartile") %>%
     mutate(
-           present = ifelse(is.na(Quartile), "1", "2"), Quartile = ifelse(present == "1", 2, Quartile)
+      present = ifelse(is.na(Qrt), "1", "2"), Qrt = ifelse(present == "1", 2, Qrt)
     ) %>%
-    mutate(Tool = gsub("_Quartile", "", Tool ), Family = gsub(" Family", "", `Kinase Family`)) %>%
-    ggplot(aes(reorder(Kinase, Family), Tool)) + geom_point(aes(size = Quartile)) +
-    coord_flip() +
-    scale_size(trans = "reverse", range = c(1,5), breaks = c(1,2,3,4)) +
-    #geom_text(position = position_dodge(width = 1), aes(x=`Kinase Family`, y=5, label = `Kinase Family`)) +
-    theme_bw() + facet_grid(Family ~ ., scales = "free", space = "free") +
+
+    filter(KinaseFamily %in% kinases) %>%
+    ggplot(aes(reorder(Uniprot_Gene, KinaseFamily), Method)) + geom_point(aes(size = Qrt, shape = present)) +
+
+    scale_radius(trans = "reverse") +
+    theme_bw() + facet_grid(. ~ KinaseFamily, scales = "free", space = "free") +
+    scale_shape_manual(values=c(1, 19)) +
+    theme(axis.text.x = element_text(angle = 30, size = 7.5, vjust = 0.7)) +
     labs(x = "", y = "")
 
 
