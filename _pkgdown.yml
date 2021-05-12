@@ -10,7 +10,7 @@ development:
   mode: auto
 
 figure:
-  fig.width: 12
+  fig.width: 15
   fig.height: 12
 
 
