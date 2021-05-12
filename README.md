@@ -11,6 +11,7 @@ Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repost
 
 [![Travis build
 status](https://travis-ci.com/kalganem/creedenzymatic.svg?branch=master)](https://travis-ci.com/kalganem/creedenzymatic)
+[![R-CMD-check](https://github.com/kalganem/creedenzymatic/workflows/R-CMD-check/badge.svg)](https://github.com/kalganem/creedenzymatic/actions)
 <!-- badges: end -->
 
 ## Installation
