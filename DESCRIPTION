@@ -2,17 +2,31 @@ Package: creedenzymatic
 Type: Package
 Title: creedenzymatic
 Version: 0.1.0
-Author: Khaled Alganem
+Author@R: c(person("Khaled", "Alganem", email = "khaled.alganem@rockets.utoledo.edu",
+                  role = c("aut", "cre")),
+            person("Justin", "Creeden", email = "justin.creeden@rockets.utoledo.edu",
+                  role = c("aut"))
+                  )
 Maintainer: Khaled Alganem <khaled.a.alganem@gmail.com>
-Description: Combine kinome results from KRSA and UKA
-    A package for intergating upstream kinases anlayses
-License: What license is it under?
+Description: Combine kinome results from KRSA and UKA and other tools
+    A package for integrating upstream kinases analyses
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: 
-  tidyverse
-  httr
-  jsonlite
+    magrittr,
+    tibble,
+    readr,
+    stats,
+    utils,
+    ggplot2,
+    tidyr,
+    dplyr
 RoxygenNote: 7.1.1
 Depends: 
     R (>= 2.10)
+Suggests: 
+    knitr,
+    rmarkdown,
+    tidyverse
+VignetteBuilder: knitr

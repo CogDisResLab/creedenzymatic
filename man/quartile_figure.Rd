@@ -2,21 +2,16 @@
 % Please edit documentation in R/quartile_figure.R
 \name{quartile_figure}
 \alias{quartile_figure}
-\title{Plot Quartile Figure}
+\title{Plot quartile Figure}
 \usage{
-quartile_figure(df, df2)
+quartile_figure(df)
 }
 \arguments{
-\item{df2}{dataframe, KRSA ranked table}
-
-\item{df1}{dataframe, UKA ranked table}
+\item{df}{dataframe, combined mapped tables}
 }
 \value{
 ggplot figure
 }
 \description{
-Takes KRSA and UKA ranked tables and generate a quartile figure
-}
-\details{
-This function takes KRSA and UKA ranked tables and generate a quartile figure
+Takes the combined ranked dataframe (KRSA, UKA, .. etc) and generate a quartile figure
 }

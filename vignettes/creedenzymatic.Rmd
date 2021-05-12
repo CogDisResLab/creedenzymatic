@@ -1,0 +1,148 @@
+---
+title: "creedenzymatic"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{creedenzymatic}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  message = FALSE,
+  fig.height=8, fig.width=8, fig.align="center",
+  warning = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Intro
+
+*creedenzymatic* is a pipeline R package to combine, standardize and visualize kinomic analyses from different tools (KRSA, UKA, KEA3, PTM-SEA)
+
+# installation
+
+```{r install}
+# install.packages("devtools")
+#devtools::install_github("kalganem/creedenzymatic")
+```
+
+```{r setup}
+library(creedenzymatic)
+library(tidyverse)
+```
+
+# Input
+
+The different kinomic tools (KRSA, UKA, KEA3, PTM-SEA) produce different outputs with various scoring metrics. To standardize the input in this package, we want to extract only two variables from each tool: **Kinase** and **Score.**
+
+**Kinase**: will be main identifier used in each tool. For example, in KRSA this variable will indicating kinase family, but with UKA it will be individual kinases.
+
+**Score**: The main metric used in the corresponding tool. For example, in KRSA this will be a Z score, in UKA it will be either kinase statistic or kinase score.
+
+### Input Format
+
+The format of the input is a dataframe with two columns: Kinase and Score. Many of these tools give outputs with many columns beyond these two. So, we need to convert the output from these tools to fit the input format needed here. An example from KRSA and UKA is show below.
+
+## KRSA Example
+
+Usually the final KRSA output has many columns like: Kinase, SamplingAverage, SD, Z, ... etc. So, we need to read that file and only select Kinase and Z score columns, and then rename the Z score column to "Score"
+
+```{r krsaExample}
+
+# reading an example of KRSA output
+krsa_ex <- read_delim("data_files/KRSA_ex.txt", delim = "\t")
+
+krsa_ex
+
+```
+
+Now we select the Kinase and Z score columns, and then rename the Z score column to "Score"
+
+```{r krsaExample2}
+
+# selecting the Kinase and Z columns, and renaming Z to Score
+krsa_ex %>% select(Kinase, Z) %>% 
+  rename(Score = Z) -> krsa_ex
+
+krsa_ex
+
+```
+
+## UKA Exmaple
+
+We do the same with the UKA output, take raw output and select kinase and either the kinase statistic or final score as the scoring metric
+
+```{r uakExample1}
+
+# reading an example of UKA output
+uka_ex <- read_delim("data_files/UKA_ex.txt", delim = "\t")
+
+uka_ex
+
+```
+
+Let's say we want the final score as the metric we want to use, so we select the two columns: kinase and median final score
+
+```{r uakExample2}
+
+# selecting the Kinase and kinase statistic columns, and renaming kinase statistic to Score
+uka_ex %>% select(`Kinase Name`, `Median Final score`) %>% 
+  rename(Kinase = `Kinase Name`, Score = `Median Final score`) -> uka_ex
+
+uka_ex
+
+```
+
+## Using the creedenzymatic package
+
+There are dedicated functions to read and rank KRSA and UKA tables in the creedenzymatic package (*read_krsa, read_uka*). These two functions will check the input format (must include two columns: Kinase and Score) and then will the *rank_kinases* function with the specified arguments. The argument are *trns* and *sort*. The *trns* argument is for transformation of the score, the values accepted for this argument are abs and raw (abs: use absolute values of scores, raw: no transformation). The *sort* argument accepts either asc or desc (ascending and descending)
+
+```{r}
+
+# read and rank the KRSA table and use absolute values and descending sorting
+read_krsa(krsa_ex, trns = "abs", sort = "desc") -> krsa_table_ranked
+
+# read and rank the UKA table and use absolute values and descending sorting
+read_uka(uka_ex, trns = "abs", sort = "desc") -> uka_table_ranked
+
+
+# preview of a ranked KRSA table
+krsa_table_ranked
+
+
+```
+
+Now we combine the ranked tables into one datframe using the combine_tools() function. 
+
+```{r}
+
+# combine ranked tables
+combine_tools(KRSA_df = krsa_table_ranked, UKA_df = uka_table_ranked) -> combined_df
+
+
+combined_df
+
+# to save file
+# write_delim(combined_df,"ce_combined_ranked_file.txt", delim = "\t")
+
+```
+
+We can visualize the results using the quartile_figure() function (which will return a ggplot). Let's we want to plot all of the kinases found in quartile 1 or 2 either in KRSA or UKA. 
+
+```{r, fig.height=8, fig.width=8, fig.align="center"}
+
+# filter out kinases found in quartile 1 or 2 either in KRSA or UKA and use the quartile_figure() for visualization
+
+combined_df %>% filter(Qrt <= 2) %>% 
+  pull(Uniprot_Gene) %>% unique() -> sig_kinases
+
+combined_df %>% 
+  filter(Uniprot_Gene %in% sig_kinases) %>% 
+  quartile_figure()
+
+
+```
+
+

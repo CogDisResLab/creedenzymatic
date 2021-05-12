@@ -4,17 +4,19 @@
 \alias{read_krsa}
 \title{Reads and Rank KRSA table}
 \usage{
-read_krsa(df)
+read_krsa(df, ...)
 }
 \arguments{
-\item{df}{dataframe, KRSA table output (requires at least Kinase and Z columns)}
+\item{df}{dataframe, table output (requires at least Kinase and Score columns)}
+
+\item{..., }{arguments passed to rank_kinases function}
 }
 \value{
-dataframe, Ranked and quartiled KRSA table
+dataframe, Ranked and quartiled table
 }
 \description{
 reads KRSA table and checks for correct format
 }
 \details{
-This function takes in KRSA table and rank and quartile kinases based on the absolute Score values
+This function takes in table and rank and quartile kinases based on the absolute Score values
 }

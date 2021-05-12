@@ -5,11 +5,14 @@
 #' This function takes in UKA table and rank and quartile kinases based on the absolute Score values
 #'
 #' @param df dataframe, UKA table output (requires at least Kinase and Z columns)
+#' @param ..., arguments passed to rank_kinases function
 #'
 #' @return dataframe, Ranked and quartiled UKA table
 #'
+#' @export
+#'
 
-read_uka <- function(df) {
+read_uka <- function(df, ...) {
 
 
   if(!is.data.frame(df)) {stop("Make sure your input is a dataframe")}
@@ -20,7 +23,7 @@ read_uka <- function(df) {
   if(!is.character(df$Kinase)) {stop("check that Kinase column is as character column")}
   if(!is.numeric(df$Score)) {stop("check that Score column is as numeric column")}
 
-  rank_kinases(df, trns = "raw", sort = "desc", tool = "UKA")
+  rank_kinases(df,  tool = "UKA", ...)
 
 
 
