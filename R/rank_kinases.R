@@ -1,6 +1,13 @@
-#' Rnak Kinases based on a score
+#' Rank Kinases based on a score
 #'
-#' @param df, dataframe
+#' This function will scale the scores on a percentile and quartile scales
+#'
+#'
+#'
+#' @param df, dataframe with 2 columns: Kinase, Score
+#' @param trns, for transformation of the score, the values accepted for this argument are abs and raw (abs: use absolute values of scores, raw: no transformation)
+#' @param sort, accepts either asc or desc (ascending and descending)
+#' @param tool, specifying the name of the tool
 #'
 #' @return
 #' @export
@@ -10,11 +17,18 @@
 #'
 rank_kinases <- function(df, trns = c("raw", "abs"), sort = c("desc", "asc"), tool = c("KRSA", "UKA")) {
 
+  if(!all(trns %in% c("raw", "abs"))) {
+    stop("the trns argument must be either raw or abs")
+  }
 
-  perc <- ecdf(1:length(df$Score))
+  if(!all(sort %in% c("desc", "asc"))) {
+    stop("the sort argument must be either desc or asc")
+  }
+
+  perc <- stats::ecdf(1:length(df$Score))
 
   df %>%
-    mutate(Rank = dense_rank(
+    dplyr::mutate(Rank = dplyr::dense_rank(
       if(sort == "desc"){
       desc( if(trns == "abs"){abs(Score)}
             else {Score})
@@ -24,13 +38,14 @@ rank_kinases <- function(df, trns = c("raw", "abs"), sort = c("desc", "asc"), to
               else {Score}
       }
       )) %>%
-    mutate(Method = tool) %>%
-    mutate(Qnt = perc(Rank),
-           Qrt = case_when(
-             Qnt <= 0.25 ~ 1,
-             Qnt <= 0.5 ~ 2,
-             Qnt <= 0.75 ~ 3,
-             Qnt <= 1 ~ 4,
+    dplyr::mutate(Method = tool) %>%
+    dplyr::mutate(#Qnt = ntile(abs(Score), 4),
+           Perc = dplyr::percent_rank(abs(Score)),
+           Qrt = dplyr::case_when(
+             1 <= Perc | Perc >= 0.75  ~ 1,
+             0.75 < Perc | Perc >= 0.5  ~ 2,
+             0.5 < Perc | Perc >= 0.25  ~ 3,
+             0.25 < Perc | Perc >= 0  ~ 4
            ))
 
 

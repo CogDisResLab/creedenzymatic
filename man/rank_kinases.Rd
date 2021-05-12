@@ -2,7 +2,7 @@
 % Please edit documentation in R/rank_kinases.R
 \name{rank_kinases}
 \alias{rank_kinases}
-\title{Rnak Kinases based on a score}
+\title{Rank Kinases based on a score}
 \usage{
 rank_kinases(
   df,
@@ -12,13 +12,19 @@ rank_kinases(
 )
 }
 \arguments{
-\item{df, }{dataframe}
+\item{df, }{dataframe with 2 columns: Kinase, Score}
+
+\item{trns, }{for transformation of the score, the values accepted for this argument are abs and raw (abs: use absolute values of scores, raw: no transformation)}
+
+\item{sort, }{accepts either asc or desc (ascending and descending)}
+
+\item{tool, }{specifying the name of the tool}
 }
 \value{
 
 }
 \description{
-Rnak Kinases based on a score
+This function will scale the scores on a percentile and quartile scales
 }
 \examples{
 
