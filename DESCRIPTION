@@ -28,5 +28,6 @@ Depends:
 Suggests: 
     knitr,
     rmarkdown,
-    tidyverse
+    tidyverse,
+    markdown
 VignetteBuilder: knitr

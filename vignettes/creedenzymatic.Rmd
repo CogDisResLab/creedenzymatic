@@ -10,7 +10,6 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   message = FALSE,
-  fig.height=8, fig.width=8, fig.align="center",
   warning = FALSE,
   collapse = TRUE,
   comment = "#>"
@@ -131,7 +130,7 @@ combined_df
 
 We can visualize the results using the quartile_figure() function (which will return a ggplot). Let's we want to plot all of the kinases found in quartile 1 or 2 either in KRSA or UKA. 
 
-```{r, fig.height=8, fig.width=8, fig.align="center"}
+```{r, fig.align="center", fig.height=6,fig.width=12}
 
 # filter out kinases found in quartile 1 or 2 either in KRSA or UKA and use the quartile_figure() for visualization
 
