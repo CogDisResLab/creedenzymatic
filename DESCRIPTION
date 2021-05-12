@@ -2,12 +2,14 @@ Package: creedenzymatic
 Type: Package
 Title: creedenzymatic
 Version: 0.1.0
-Author@R: c(person("Khaled", "Alganem", email = "khaled.alganem@rockets.utoledo.edu",
-                  role = c("aut", "cre")),
-            person("Justin", "Creeden", email = "justin.creeden@rockets.utoledo.edu",
-                  role = c("aut"))
-                  )
-Maintainer: Khaled Alganem <khaled.a.alganem@gmail.com>
+Authors@R: c(
+    person("Khaled", "Alganem", email = "khaled.alganem@rockets.utoledo.edu",
+        role = c("aut", "cre")
+    ),
+    person("Justin", "Creeden", email = "justin.creeden@rockets.utoledo.edu",
+        role = c("aut")
+    )
+    )
 Description: Combine kinome results from KRSA and UKA and other tools
     A package for integrating upstream kinases analyses
 License: MIT + file LICENSE
