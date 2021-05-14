@@ -23,7 +23,9 @@ Imports:
     utils,
     ggplot2,
     tidyr,
-    dplyr
+    dplyr,
+    httr,
+    jsonlite
 RoxygenNote: 7.1.1
 Depends: 
     R (>= 2.10)

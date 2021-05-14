@@ -40,7 +40,15 @@ rank_kinases <- function(df, trns = c("raw", "abs"), sort = c("desc", "asc"), to
       )) %>%
     dplyr::mutate(Method = tool) %>%
     dplyr::mutate(#Qnt = ntile(abs(Score), 4),
-           Perc = dplyr::percent_rank(abs(Score)),
+           Perc = if(sort == "desc"){
+             if(trns == "abs"){dplyr::percent_rank(abs(Score))}
+                   else {dplyr::percent_rank(Score)}
+           }
+           else{
+             if(trns == "abs"){dplyr::percent_rank(desc(abs(Score)))}
+             else {dplyr::percent_rank(Score)}
+           }
+             ,
            Qrt = dplyr::case_when(
              1 <= Perc | Perc >= 0.75  ~ 1,
              0.75 < Perc | Perc >= 0.5  ~ 2,
