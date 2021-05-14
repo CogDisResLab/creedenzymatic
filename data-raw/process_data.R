@@ -17,7 +17,37 @@ kinome_mp_file_v1 <- read_delim("data-raw/kinase_mapping.txt", delim = "\t",
                       )
 )
 
+# peptide to HGNC
+
+stk_pamchip_87102_mapping <- read_delim("data-raw/2021_10_13-JFC_complete-stk_peptides_mapping.txt", delim = "\t") %>%
+  select(ID, HGNC)
+ptk_pamchip_86402_mapping <- read_delim("data-raw/2021_10_13-JFC_complete-ptk_peptides_mapping.txt", delim = "\t") %>%
+  select(ID, HGNC)
+
+KRSA::KRSA_coverage_STK_PamChip_87102_v2$Substrates %>% unique() -> stk_peps
+KRSA::KRSA_coverage_PTK_PamChip_86402_v1$Substrates %>% unique() %>% as.character() -> ptk_peps
+
+setdiff(stk_peps, stk_pamchip_87102_mapping$ID)
+
+add_stk <- tibble::tibble(
+  ID = c("H2B1B_ 27_40","E1A_ADE05_212_224"),
+  HGNC = c("H2BC3", NA)
+)
+
+setdiff(ptk_peps, ptk_pamchip_86402_mapping$ID)
+
+add_ptk <- tibble::tibble(
+  ID = c("CD3Z_147_159"),
+  HGNC = c("CD247")
+)
+
+
+rbind(stk_pamchip_87102_mapping, add_stk) -> stk_pamchip_87102_mapping
+rbind(ptk_pamchip_86402_mapping, add_ptk) -> ptk_pamchip_86402_mapping
+
 usethis::use_data(uka_db_full,
                   kinome_mp_file_v1,
+                  stk_pamchip_87102_mapping,
+                  ptk_pamchip_86402_mapping,
                   overwrite = T)
 

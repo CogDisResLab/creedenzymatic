@@ -15,7 +15,7 @@ quartile_figure <- function(df) {
   df %>%
     dplyr::select(Uniprot_Gene, KinaseFamily, Qrt, Method) %>%
     tidyr::pivot_wider(names_from = Method, values_from = Qrt) %>%
-    tidyr::pivot_longer(3:4, names_to = "Method", values_to = "Qrt") %>%
+    tidyr::pivot_longer(3:ncol(.), names_to = "Method", values_to = "Qrt") %>%
     dplyr::mutate(
       present = ifelse(is.na(Qrt), "No", "Yes"), Qrt = ifelse(present == "No", 2, Qrt)
     ) %>%
