@@ -15,7 +15,7 @@
 #' @export
 #'
 
-combine_tools <- function(KRSA_df = NULL, UKA_df = NULL, KEA3_df = NULL, PTM_SEA_df = NULL, mapping_df = kinome_mp_file_v1) {
+combine_tools <- function(KRSA_df = NULL, UKA_df = NULL, KEA3_df = NULL, PTM_SEA_df = NULL, mapping_df = kinome_mp_file_v2) {
 
 
   my_tibble <- tibble::tibble(
@@ -25,32 +25,34 @@ combine_tools <- function(KRSA_df = NULL, UKA_df = NULL, KEA3_df = NULL, PTM_SEA
     Method = character(),
     Perc = numeric(),
     Qrt = numeric(),
-    Uniprot_Gene = character(),
+    hgnc_symbol = character(),
+    group = character(),
     KinaseFamily = character(),
+    subfamily = character()
 
   )
 
   if(!is.null(KRSA_df)) {
-    dplyr::left_join(KRSA_df, dplyr::select(mapping_df, KRSA, Uniprot_Gene), by = c("Kinase" = "KRSA")) %>%
-      dplyr::mutate(KinaseFamily = Kinase) %>%
+    dplyr::left_join(KRSA_df %>% mutate(Kinase = toupper(Kinase)), dplyr::select(mapping_df, krsa_id, hgnc_symbol, group, family, subfamily), by = c("Kinase" = "krsa_id")) %>%
+      dplyr::rename(KinaseFamily = family) %>%
       rbind(my_tibble) -> my_tibble
   }
 
   if(!is.null(UKA_df)) {
-    dplyr::left_join(UKA_df, dplyr::select(mapping_df, UKA, Uniprot_Gene, KRSA), by = c("Kinase" = "UKA")) %>%
-      dplyr::rename(KinaseFamily = KRSA) %>%
+    dplyr::left_join(UKA_df %>% mutate(Kinase = toupper(Kinase)), dplyr::select(mapping_df, uka_id, hgnc_symbol, group, family, subfamily), by = c("Kinase" = "uka_id")) %>%
+      dplyr::rename(KinaseFamily = family) %>%
       rbind(my_tibble) -> my_tibble
   }
 
   if(!is.null(KEA3_df)) {
-    dplyr::left_join(KEA3_df, dplyr::select(mapping_df, KEA3, Uniprot_Gene, KRSA), by = c("Kinase" = "KEA3")) %>%
-      dplyr::rename(KinaseFamily = KRSA) %>%
+    dplyr::left_join(KEA3_df %>% mutate(Kinase = toupper(Kinase)), dplyr::select(mapping_df, kea3_id, hgnc_symbol, group, family, subfamily), by = c("Kinase" = "kea3_id")) %>%
+      dplyr::rename(KinaseFamily = family) %>%
       rbind(my_tibble) -> my_tibble
   }
 
   if(!is.null(PTM_SEA_df)) {
-    dplyr::left_join(PTM_SEA_df, dplyr::select(mapping_df, PTMSEA, Uniprot_Gene, KRSA), by = c("Kinase" = "PTMSEA")) %>%
-      dplyr::rename(KinaseFamily = KRSA) %>%
+    dplyr::left_join(PTM_SEA_df %>% mutate(Kinase = toupper(Kinase)), dplyr::select(mapping_df, ptmsea_id, hgnc_symbol, group, family, subfamily), by = c("Kinase" = "ptmsea_id")) %>%
+      dplyr::rename(KinaseFamily = family) %>%
       rbind(my_tibble) -> my_tibble
   }
 

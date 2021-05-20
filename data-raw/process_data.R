@@ -1,4 +1,5 @@
 library(readr)
+library(dplyr)
 
 load("data-raw/runDb.RData")
 DB_ptk <- DB %>% ungroup()
@@ -16,6 +17,13 @@ kinome_mp_file_v1 <- read_delim("data-raw/kinase_mapping.txt", delim = "\t",
                              "Not Found By Ethan", "Not Found By Jake"
                       )
 )
+
+kinome_mp_file_v2 <- read_delim("data-raw/2021_05_20-creedenzymatic_map.txt", delim = "\t",
+                                na = c("N/A","Not found by Ethan", "Not found by Jake", "Not found",
+                                       "Not Found By Ethan", "Not Found By Jake")) %>%
+  filter(!is.na(hgnc_symbol)) %>%
+  mutate_at(c("class", "group", "family", "subfamily", "krsa_id", "uka_id", "kea3_id", "ptmsea_id"), toupper) %>%
+  select(1:12)
 
 # peptide to HGNC
 
@@ -47,6 +55,7 @@ rbind(ptk_pamchip_86402_mapping, add_ptk) -> ptk_pamchip_86402_mapping
 
 usethis::use_data(uka_db_full,
                   kinome_mp_file_v1,
+                  kinome_mp_file_v2,
                   stk_pamchip_87102_mapping,
                   ptk_pamchip_86402_mapping,
                   overwrite = T)

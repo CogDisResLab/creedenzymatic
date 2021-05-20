@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>UKA Complete DB mapping File (STK + PTK) — uka_db_full • creedenzymatic</title>
+<title>Run KEA3 API based on a set of gene symbols — run_kea • creedenzymatic</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="UKA Complete DB mapping File (STK + PTK) — uka_db_full" />
-<meta property="og:description" content="A data frame of the UKA Complete DB mapping File (STK + PTK)" />
+<meta property="og:title" content="Run KEA3 API based on a set of gene symbols — run_kea" />
+<meta property="og:description" content="This function takes in HGNC gene symbols and connect to KEA3 API and returns results" />
 
 
 
@@ -111,24 +111,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>UKA Complete DB mapping File (STK + PTK)</h1>
+    <h1>Run KEA3 API based on a set of gene symbols</h1>
     
-    <div class="hidden name"><code>uka_db_full.Rd</code></div>
+    <div class="hidden name"><code>run_kea.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A data frame of the UKA Complete DB mapping File (STK + PTK)</p>
+    <p>This function takes in HGNC gene symbols and connect to KEA3 API and returns results</p>
     </div>
 
-    <pre class="usage"><span class='va'>uka_db_full</span></pre>
+    <pre class="usage"><span class='fu'>run_kea</span><span class='op'>(</span><span class='va'>gene_set</span>, lib <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"kinases"</span><span class='op'>)</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>gene_set</th>
+      <td><p>vector, HGNC gene symbols based on the differentially phosphorylated peptides</p></td>
+    </tr>
+    <tr>
+      <th>lib</th>
+      <td><p>searched kea libraries (default is "kinases" which will return only kinase libraries like ChengKSIN, PTMsigDB, PhosDAll)</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame with 11385 rows and 17 variables:</p><dl>
-
-</dl>
-
+    <p>list, tables from each KEA3 library</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

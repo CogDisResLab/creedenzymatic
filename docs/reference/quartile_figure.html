@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">creedenzymatic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -120,7 +120,7 @@
     <p>Takes the combined ranked dataframe (KRSA, UKA, .. etc) and generate a quartile figure</p>
     </div>
 
-    <pre class="usage"><span class='fu'>quartile_figure</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>quartile_figure</span><span class='op'>(</span><span class='va'>df</span>, grouping <span class='op'>=</span> <span class='st'>"KinaseFamily"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -128,6 +128,10 @@
     <tr>
       <th>df</th>
       <td><p>dataframe, combined mapped tables</p></td>
+    </tr>
+    <tr>
+      <th>grouping</th>
+      <td><p>character to choose grouping (KinaseFamily or group). Default is KinaseFamily</p></td>
     </tr>
     </table>
 
