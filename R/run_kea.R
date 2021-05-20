@@ -38,7 +38,10 @@ run_kea <- function(gene_set, lib = c("kinases")) {
     #   pivot_wider(names_from = name, values_from = value)
 
   }
-  else {message("Couldn't connect to KEA3 API successfully")}
+  else {
+    message("Couldn't connect to KEA3 API successfully")
+    return(NA_real_)
+    }
 
 
 }

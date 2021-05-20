@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">creedenzymatic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -232,7 +232,7 @@
 <span class="co">#&gt;  9 SYK    0.930     9 KRSA   0.652     2</span>
 <span class="co">#&gt; 10 CSK    0.912    10 KRSA   0.609     2</span>
 <span class="co">#&gt; # … with 14 more rows</span></code></pre></div>
-<p>Now we combine the ranked tables into one datframe using the combine_tools() function.</p>
+<p>Now we combine the ranked tables into one dataframe using the combine_tools() function.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="co"># combine ranked tables</span>
@@ -240,20 +240,20 @@
 
 
 <span class="va">combined_df</span>
-<span class="co">#&gt; # A tibble: 152 x 8</span>
-<span class="co">#&gt;    Kinase       Score  Rank Method  Perc   Qrt Uniprot_Gene KinaseFamily</span>
-<span class="co">#&gt;    &lt;chr&gt;        &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;       </span>
-<span class="co">#&gt;  1 Lck           2.77     1 UKA    1         1 LCK          SRC         </span>
-<span class="co">#&gt;  2 Lyn           2.52     2 UKA    0.987     1 LYN          SRC         </span>
-<span class="co">#&gt;  3 Ron           2.50     3 UKA    0.973     1 MST1R        MET         </span>
-<span class="co">#&gt;  4 FRK           2.35     4 UKA    0.96      1 FRK          FRK         </span>
-<span class="co">#&gt;  5 Abl           2.29     5 UKA    0.947     1 ABL1         ABL         </span>
-<span class="co">#&gt;  6 Tyro3/Sky     2.19     6 UKA    0.933     1 TYRO3        AXL         </span>
-<span class="co">#&gt;  7 Src           2.07     7 UKA    0.92      1 SRC          SRC         </span>
-<span class="co">#&gt;  8 PDGFR[alpha]  2.06     8 UKA    0.907     1 PDGFRA       PDGFR       </span>
-<span class="co">#&gt;  9 Arg           1.97     9 UKA    0.893     1 ABL2         ABL         </span>
-<span class="co">#&gt; 10 Fyn           1.95    10 UKA    0.88      1 FYN          SRC         </span>
-<span class="co">#&gt; # … with 142 more rows</span>
+<span class="co">#&gt; # A tibble: 152 x 10</span>
+<span class="co">#&gt;    Kinase Score  Rank Method  Perc   Qrt hgnc_symbol group KinaseFamily</span>
+<span class="co">#&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;       </span>
+<span class="co">#&gt;  1 LCK     2.77     1 UKA    1         1 LCK         TK    SRC         </span>
+<span class="co">#&gt;  2 LYN     2.52     2 UKA    0.987     1 LYN         TK    SRC         </span>
+<span class="co">#&gt;  3 RON     2.50     3 UKA    0.973     1 MST1R       TK    MET         </span>
+<span class="co">#&gt;  4 FRK     2.35     4 UKA    0.96      1 FRK         TK    SRC         </span>
+<span class="co">#&gt;  5 ABL     2.29     5 UKA    0.947     1 ABL1        TK    ABL         </span>
+<span class="co">#&gt;  6 TYRO3…  2.19     6 UKA    0.933     1 TYRO3       TK    AXL         </span>
+<span class="co">#&gt;  7 SRC     2.07     7 UKA    0.92      1 SRC         TK    SRC         </span>
+<span class="co">#&gt;  8 PDGFR…  2.06     8 UKA    0.907     1 PDGFRA      TK    PDGFR       </span>
+<span class="co">#&gt;  9 ARG     1.97     9 UKA    0.893     1 ABL2        TK    ABL         </span>
+<span class="co">#&gt; 10 FYN     1.95    10 UKA    0.88      1 FYN         TK    SRC         </span>
+<span class="co">#&gt; # … with 142 more rows, and 1 more variable: subfamily &lt;chr&gt;</span>
 
 <span class="co"># to save file</span>
 <span class="co"># write_delim(combined_df,"ce_combined_ranked_file.txt", delim = "\t")</span></code></pre></div>
@@ -263,13 +263,41 @@
 <span class="co"># filter out kinases found in quartile 1 or 2 either in KRSA or UKA and use the quartile_figure() for visualization</span>
 
 <span class="va">combined_df</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Qrt</span> <span class="op">&lt;=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">pull</span><span class="op">(</span><span class="va">Uniprot_Gene</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">sig_kinases</span>
+  <span class="fu">pull</span><span class="op">(</span><span class="va">hgnc_symbol</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">sig_kinases</span>
 
 <span class="va">combined_df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Uniprot_Gene</span> <span class="op">%in%</span> <span class="va">sig_kinases</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">hgnc_symbol</span> <span class="op">%in%</span> <span class="va">sig_kinases</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/quartile_figure.html">quartile_figure</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="creedenzymatic_files/figure-html/unnamed-chunk-4-1.png" width="1152" style="display: block; margin: auto;"></p>
 </div>
+</div>
+<div id="kea3" class="section level1">
+<h1 class="hasAnchor">
+<a href="#kea3" class="anchor"></a>KEA3</h1>
+<p>To run KEA3, we need a subset of peptides as an input (this subset of peptides could represent top differentially phosphorylated peptides, peptides mapped to a recombinant kinase, … etc). Both KRSA and UKA calculate log2 fold change (LFC) values of peptide phosphorylation levels. These LFC values could be used to determine the top peptides using either an LFC cutoff or rank order of peptides.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="co"># an example of file with peptide IDs and LFC</span>
+<span class="va">kea_ex</span> <span class="op">&lt;-</span> <span class="fu">read_delim</span><span class="op">(</span><span class="st">"data_files/KEA3_ex.txt"</span>, delim <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span>
+
+<span class="co"># rename column to Score</span>
+<span class="va">kea_ex</span> <span class="op">%&gt;%</span> <span class="fu">rename</span><span class="op">(</span>Score <span class="op">=</span> <span class="va">totalMeanLFC</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">kea_ex</span>
+
+<span class="co"># run kea3, using the peptide list with a cutoff value</span>
+<span class="fu"><a href="../reference/read_kea.html">read_kea</a></span><span class="op">(</span><span class="va">kea_ex</span>, filter <span class="op">=</span> <span class="cn">T</span>, cutoff <span class="op">=</span> <span class="fl">0.4</span>, cutoff_abs <span class="op">=</span> <span class="cn">T</span>, sort <span class="op">=</span> <span class="st">"asc"</span>, trns <span class="op">=</span> <span class="st">"abs"</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">kea_table_ranked</span>
+
+<span class="co"># quartile figure using kinase family as the grouping factor</span>
+<span class="fu"><a href="../reference/combine_tools.html">combine_tools</a></span><span class="op">(</span>KRSA_df <span class="op">=</span> <span class="va">krsa_table_ranked</span>, UKA_df <span class="op">=</span> <span class="va">uka_table_ranked</span>, KEA3_df <span class="op">=</span> <span class="va">kea_table_ranked</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">hgnc_symbol</span> <span class="op">%in%</span> <span class="va">sig_kinases</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/quartile_figure.html">quartile_figure</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="creedenzymatic_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="co"># quartile figure using kinase groups as the grouping factor (more useful in STK runs)</span>
+<span class="fu"><a href="../reference/combine_tools.html">combine_tools</a></span><span class="op">(</span>KRSA_df <span class="op">=</span> <span class="va">krsa_table_ranked</span>, UKA_df <span class="op">=</span> <span class="va">uka_table_ranked</span>, KEA3_df <span class="op">=</span> <span class="va">kea_table_ranked</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">hgnc_symbol</span> <span class="op">%in%</span> <span class="va">sig_kinases</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/quartile_figure.html">quartile_figure</a></span><span class="op">(</span>grouping <span class="op">=</span> <span class="st">"group"</span><span class="op">)</span></code></pre></div>
+<p><img src="creedenzymatic_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
 </div>
   </div>
 

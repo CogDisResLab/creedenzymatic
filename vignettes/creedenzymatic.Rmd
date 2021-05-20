@@ -113,7 +113,7 @@ krsa_table_ranked
 
 ```
 
-Now we combine the ranked tables into one datframe using the combine_tools() function. 
+Now we combine the ranked tables into one dataframe using the combine_tools() function. 
 
 ```{r}
 
@@ -135,10 +135,10 @@ We can visualize the results using the quartile_figure() function (which will re
 # filter out kinases found in quartile 1 or 2 either in KRSA or UKA and use the quartile_figure() for visualization
 
 combined_df %>% filter(Qrt <= 2) %>% 
-  pull(Uniprot_Gene) %>% unique() -> sig_kinases
+  pull(hgnc_symbol) %>% unique() -> sig_kinases
 
 combined_df %>% 
-  filter(Uniprot_Gene %in% sig_kinases) %>% 
+  filter(hgnc_symbol %in% sig_kinases) %>% 
   quartile_figure()
 
 
@@ -150,27 +150,25 @@ combined_df %>%
 To run KEA3, we need a subset of peptides as an input (this subset of peptides could represent top differentially phosphorylated peptides, peptides mapped to a recombinant kinase, ... etc). Both KRSA and UKA calculate log2 fold change (LFC) values of peptide phosphorylation levels. These LFC values could be used to determine the top peptides using either an LFC cutoff or rank order of peptides. 
 
 ```{r}
-# not done yet (wip)
+
 # an example of file with peptide IDs and LFC
 kea_ex <- read_delim("data_files/KEA3_ex.txt", delim = "\t")
 
+# rename column to Score
+kea_ex %>% rename(Score = totalMeanLFC) -> kea_ex
 
-run_kea(gn_list) -> kea_res
+# run kea3, using the peptide list with a cutoff value
+read_kea(kea_ex, filter = T, cutoff = 0.4, cutoff_abs = T, sort = "asc", trns = "abs") -> kea_table_ranked
 
-purrr::map_df(kea_res, rbind) %>% 
-  select(TF, FDR) %>% 
-  mutate(FDR = as.numeric(FDR)) %>%
-  group_by(TF) %>% 
-  summarise(Score = mean(FDR)) %>% 
-  ungroup() %>% 
-  rename(Kinase = TF) -> kea_example
-
-
-rank_kinases(kea_example, sort = "asc", trns = "abs", tool = "KEA") -> kea_table_ranked
-
+# quartile figure using kinase family as the grouping factor
 combine_tools(KRSA_df = krsa_table_ranked, UKA_df = uka_table_ranked, KEA3_df = kea_table_ranked) %>% 
-  filter(Uniprot_Gene %in% sig_kinases) %>% 
+  filter(hgnc_symbol %in% sig_kinases) %>% 
   quartile_figure()
+
+# quartile figure using kinase groups as the grouping factor (more useful in STK runs)
+combine_tools(KRSA_df = krsa_table_ranked, UKA_df = uka_table_ranked, KEA3_df = kea_table_ranked) %>% 
+  filter(hgnc_symbol %in% sig_kinases) %>% 
+  quartile_figure(grouping = "group")
 
 
 ```

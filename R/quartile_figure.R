@@ -4,27 +4,28 @@
 #'
 #'
 #' @param df dataframe, combined mapped tables
+#' @param grouping character to choose grouping (KinaseFamily or group). Default is KinaseFamily
 #'
 #' @return ggplot figure
 #'
 #' @export
 #'
 
-quartile_figure <- function(df) {
+quartile_figure <- function(df, grouping = "KinaseFamily") {
 
   df %>%
-    dplyr::select(Uniprot_Gene, KinaseFamily, Qrt, Method) %>%
+    dplyr::select(hgnc_symbol, one_of(grouping), Qrt, Method) %>%
     tidyr::pivot_wider(names_from = Method, values_from = Qrt) %>%
     tidyr::pivot_longer(3:ncol(.), names_to = "Method", values_to = "Qrt") %>%
     dplyr::mutate(
       present = ifelse(is.na(Qrt), "No", "Yes"), Qrt = ifelse(present == "No", 2, Qrt)
     ) %>%
     #filter(KinaseFamily %in% kinases) %>%
-    ggplot2::ggplot(ggplot2::aes(Uniprot_Gene, Method)) +
+    ggplot2::ggplot(ggplot2::aes(hgnc_symbol, Method)) +
     ggplot2::geom_point(ggplot2::aes(size = Qrt, shape = present)) +
     ggplot2::scale_radius(trans = "reverse") +
     ggplot2::theme_bw() +
-    ggplot2::facet_grid(. ~ KinaseFamily, scales = "free", space = "free") +
+    {if(grouping == "KinaseFamily") ggplot2::facet_grid(. ~ KinaseFamily, scales = "free", space = "free") else ggplot2::facet_grid(. ~ group, scales = "free", space = "free")}+
     ggplot2::scale_shape_manual(values=c(1, 19)) +
     ggplot2::theme(axis.text.x = element_text(angle = 30, size = 7.5, vjust = 0.7)) +
     ggplot2::labs(x = "", y = "")
