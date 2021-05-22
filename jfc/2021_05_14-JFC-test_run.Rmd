@@ -21,6 +21,7 @@ Install required packages
 #install.packages("tidyverse")
 #install.packages("devtools")
 #devtools::install_github("kalganem/creedenzymatic")
+#install.packages("ellipsis")
 ```
 
 
@@ -34,14 +35,20 @@ library(creedenzymatic)
 
 Define variables
 ```{r}
+
+####################### NH1: Females
+
 #Location of KRSA's output "acrossChip_KRSA_FullTable" txt file
-JFC_directory_krsa_input <- "input/hinds/2021-05-14-stk-h_f-v-h_c-acrossChip_KRSA_FullTable_comp1.txt"
+JFC_directory_krsa_input <- "input/nick/2021-05-22-nick-stk-ad_v_ctrl-females-KRSA-acrossChip_KRSA_FullTable_comp1.txt"
 
 #Location of UKA's output "SummaryResults" txt file
-JFC_directory_uka_input <- "input/hinds/2021-03-04-stk-h_f-v-h_c-UKA-Summaryresults 20210304-1330.txt"
+JFC_directory_uka_input <- "input/nick/nick-stk-ad_v_ctrl-females_Summary UKA results 20210520-1453.txt"
+
+#Project name
+JFC_experiment_ID <- "NH1_stk_ad_v_ctrl-females-ce_combined"
 
 #Desired location of Creedenzymatic output
-JFC_directory_output <- "output/nick/AD_Females_DLPFC/"
+JFC_directory_output <- "output/nick/"
 
 #Select desired UKA metric
   #Mean Final Score
@@ -50,6 +57,55 @@ JFC_directory_output <- "output/nick/AD_Females_DLPFC/"
 
   #Mean Kinase Statistic
   #JFC_desired_UKA_metric <- "Mean Kinase Statistic"
+  
+
+####################### NH2: Males
+
+#Location of KRSA's output "acrossChip_KRSA_FullTable" txt file
+#JFC_directory_krsa_input <- "input/nick/2021-05-22-nick-stk-ad_v_ctrl-males-KRSA-acrossChip_KRSA_FullTable_comp1.txt"
+
+#Location of UKA's output "SummaryResults" txt file
+#JFC_directory_uka_input <- "input/nick/nick-stk-ad_v_ctrl-males_Summary UKA results 20210520-1737.txt"
+
+#Project name
+#JFC_experiment_ID <- "NH2_stk_ad_v_ctrl-males-ce_combined"
+
+#Desired location of Creedenzymatic output
+#JFC_directory_output <- "output/nick/"
+
+#Select desired UKA metric
+  #Mean Final Score
+  #JFC_desired_UKA_metric <- "Mean Final Score" 
+  #Khaled, I changed this ^ from 'median' to 'mean'
+
+  #Mean Kinase Statistic
+  #JFC_desired_UKA_metric <- "Mean Kinase Statistic"
+
+
+####################### NH3: Mixed (males and females)
+
+#Location of KRSA's output "acrossChip_KRSA_FullTable" txt file
+#JFC_directory_krsa_input <- "input/nick/2021-05-22-nick-stk-ad_v_ctrl-mixed-KRSA-acrossChip_KRSA_FullTable_comp1.txt"
+
+#Location of UKA's output "SummaryResults" txt file
+#JFC_directory_uka_input <- "input/nick/nick-stk-ad_v_ctrl-mixed_Summary UKA results 20210520-1811.txt"
+
+#Project name
+#JFC_experiment_ID <- "NH3_stk_ad_v_ctrl-mixed-ce_combined"
+
+#Desired location of Creedenzymatic output
+#JFC_directory_output <- "output/nick/"
+
+#Select desired UKA metric
+  #Mean Final Score
+  #JFC_desired_UKA_metric <- "Mean Final Score" 
+  #Khaled, I changed this ^ from 'median' to 'mean'
+
+  #Mean Kinase Statistic
+  #JFC_desired_UKA_metric <- "Mean Kinase Statistic"
+  
+  
+  
 ```
 
 
@@ -79,7 +135,7 @@ read_uka(uka_ex, trns = "abs", sort = "desc") -> uka_table_ranked
 combine_tools(KRSA_df = krsa_table_ranked, UKA_df = uka_table_ranked) -> combined_df
 
 # save file
-write_delim(combined_df, paste0(JFC_directory_output,"ce_combined_ranked_file.txt"), delim = "\t")
+write_delim(combined_df, paste0(JFC_directory_output, JFC_experiment_ID,"ce_combined_ranked_file.txt"), delim = "\t")
 
 # filter out kinases found in quartile 1 or 2 either in KRSA or UKA and use the quartile_figure() for visualization
 # added na.omit() to filter out NA values in found the Uniprot_Gene col
@@ -88,6 +144,14 @@ combined_df %>% filter(Qrt <= 1) %>%
   na.omit() %>% unique() -> sig_kinases
 
 combined_df %>% filter(Uniprot_Gene %in% sig_kinases) %>% quartile_figure()
+
+pdf(file = (paste0(JFC_directory_output,Sys.Date()," - ",JFC_experiment_ID," - ","creedenzymatic"," - ",".pdf")),useDingbats = F, width = 50 ,height = 3.5)
+combined_df %>% filter(Uniprot_Gene %in% sig_kinases) %>% quartile_figure()
+dev.off()
+
+png(file = (paste0(JFC_directory_output,Sys.Date()," - ",JFC_experiment_ID," - ","creedenzymatic"," - ",".png")),width = 50000, height = 3500,units = "px",pointsize = 12,res = 1200)
+combined_df %>% filter(Uniprot_Gene %in% sig_kinases) %>% quartile_figure()
+dev.off()
 
 
 # to fix this issue in the future, we need to update the master kinome mapping file
