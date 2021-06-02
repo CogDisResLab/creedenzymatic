@@ -290,14 +290,14 @@
 <span class="fu"><a href="../reference/combine_tools.html">combine_tools</a></span><span class="op">(</span>KRSA_df <span class="op">=</span> <span class="va">krsa_table_ranked</span>, UKA_df <span class="op">=</span> <span class="va">uka_table_ranked</span>, KEA3_df <span class="op">=</span> <span class="va">kea_table_ranked</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">hgnc_symbol</span> <span class="op">%in%</span> <span class="va">sig_kinases</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/quartile_figure.html">quartile_figure</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="creedenzymatic_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p><img src="creedenzymatic_files/figure-html/unnamed-chunk-5-1.png" width="1152" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="co"># quartile figure using kinase groups as the grouping factor (more useful in STK runs)</span>
 <span class="fu"><a href="../reference/combine_tools.html">combine_tools</a></span><span class="op">(</span>KRSA_df <span class="op">=</span> <span class="va">krsa_table_ranked</span>, UKA_df <span class="op">=</span> <span class="va">uka_table_ranked</span>, KEA3_df <span class="op">=</span> <span class="va">kea_table_ranked</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">hgnc_symbol</span> <span class="op">%in%</span> <span class="va">sig_kinases</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/quartile_figure.html">quartile_figure</a></span><span class="op">(</span>grouping <span class="op">=</span> <span class="st">"group"</span><span class="op">)</span></code></pre></div>
-<p><img src="creedenzymatic_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
+<p><img src="creedenzymatic_files/figure-html/unnamed-chunk-5-2.png" width="1152" style="display: block; margin: auto;"></p>
 </div>
   </div>
 
