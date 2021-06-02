@@ -149,7 +149,7 @@ combined_df %>%
 
 To run KEA3, we need a subset of peptides as an input (this subset of peptides could represent top differentially phosphorylated peptides, peptides mapped to a recombinant kinase, ... etc). Both KRSA and UKA calculate log2 fold change (LFC) values of peptide phosphorylation levels. These LFC values could be used to determine the top peptides using either an LFC cutoff or rank order of peptides. 
 
-```{r}
+```{r, fig.align="center", fig.height=6,fig.width=12}
 
 # an example of file with peptide IDs and LFC
 kea_ex <- read_delim("data_files/KEA3_ex.txt", delim = "\t")
