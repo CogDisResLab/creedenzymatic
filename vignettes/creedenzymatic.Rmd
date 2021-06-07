@@ -154,8 +154,9 @@ To run KEA3, we need a subset of peptides as an input (this subset of peptides c
 # an example of file with peptide IDs and LFC
 kea_ex <- read_delim("data_files/KEA3_ex.txt", delim = "\t")
 
-# rename column to Score
-kea_ex %>% rename(Score = totalMeanLFC) -> kea_ex
+kea_ex %>% 
+  select(Peptide, Score = totalMeanLFC) -> kea_ex
+
 
 # run kea3, using the peptide list with a cutoff value
 read_kea(kea_ex, filter = T, cutoff = 0.4, cutoff_abs = T, sort = "asc", trns = "abs") -> kea_table_ranked
