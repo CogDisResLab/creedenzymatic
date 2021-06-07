@@ -70,6 +70,8 @@ read_kea <- function(df, filter, cutoff, cutoff_abs = T,direction = "higher", li
     dplyr::left_join(rbind(stk_pamchip_87102_mapping, ptk_pamchip_86402_mapping), by = c("Peptide" = "ID")) %>%
     pull(HGNC) -> pep_hits
 
+  pep_hits <- na.omit(pep_hits)
+
   message(length(pep_hits))
 
   run_kea(pep_hits, lib) -> kea_results
