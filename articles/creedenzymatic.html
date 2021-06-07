@@ -280,8 +280,9 @@
 <span class="co"># an example of file with peptide IDs and LFC</span>
 <span class="va">kea_ex</span> <span class="op">&lt;-</span> <span class="fu">read_delim</span><span class="op">(</span><span class="st">"data_files/KEA3_ex.txt"</span>, delim <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span>
 
-<span class="co"># rename column to Score</span>
-<span class="va">kea_ex</span> <span class="op">%&gt;%</span> <span class="fu">rename</span><span class="op">(</span>Score <span class="op">=</span> <span class="va">totalMeanLFC</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">kea_ex</span>
+<span class="va">kea_ex</span> <span class="op">%&gt;%</span> 
+  <span class="fu">select</span><span class="op">(</span><span class="va">Peptide</span>, Score <span class="op">=</span> <span class="va">totalMeanLFC</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">kea_ex</span>
+
 
 <span class="co"># run kea3, using the peptide list with a cutoff value</span>
 <span class="fu"><a href="../reference/read_kea.html">read_kea</a></span><span class="op">(</span><span class="va">kea_ex</span>, filter <span class="op">=</span> <span class="cn">T</span>, cutoff <span class="op">=</span> <span class="fl">0.4</span>, cutoff_abs <span class="op">=</span> <span class="cn">T</span>, sort <span class="op">=</span> <span class="st">"asc"</span>, trns <span class="op">=</span> <span class="st">"abs"</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">kea_table_ranked</span>
