@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">creedenzymatic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.21</span>
       </span>
     </div>
 
@@ -137,6 +137,8 @@
 <span class="va">krsa_ex</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">Kinase</span>, <span class="va">Z</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">rename</span><span class="op">(</span>Score <span class="op">=</span> <span class="va">Z</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">krsa_ex</span>
 
+<span class="va">kinome_mp_file_v2</span> <span class="op">%&gt;%</span> <span class="va">view</span>
+
 <span class="va">krsa_ex</span>
 <span class="co">#&gt; # A tibble: 24 x 2</span>
 <span class="co">#&gt;    Kinase Score</span>
@@ -240,7 +242,7 @@
 
 
 <span class="va">combined_df</span>
-<span class="co">#&gt; # A tibble: 152 x 10</span>
+<span class="co">#&gt; # A tibble: 151 x 10</span>
 <span class="co">#&gt;    Kinase       Score  Rank Method  Perc   Qrt hgnc_symbol group KinaseFamily</span>
 <span class="co">#&gt;    &lt;chr&gt;        &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;       </span>
 <span class="co">#&gt;  1 LCK           2.77     1 UKA    1         1 LCK         TK    SRC         </span>
@@ -253,7 +255,7 @@
 <span class="co">#&gt;  8 PDGFR[ALPHA]  2.06     8 UKA    0.907     1 PDGFRA      TK    PDGFR       </span>
 <span class="co">#&gt;  9 ARG           1.97     9 UKA    0.893     1 ABL2        TK    ABL         </span>
 <span class="co">#&gt; 10 FYN           1.95    10 UKA    0.88      1 FYN         TK    SRC         </span>
-<span class="co">#&gt; # … with 142 more rows, and 1 more variable: subfamily &lt;chr&gt;</span>
+<span class="co">#&gt; # … with 141 more rows, and 1 more variable: subfamily &lt;chr&gt;</span>
 
 <span class="co"># to save file</span>
 <span class="co"># write_delim(combined_df,"ce_combined_ranked_file.txt", delim = "\t")</span></code></pre></div>
