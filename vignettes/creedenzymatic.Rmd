@@ -65,6 +65,8 @@ Now we select the Kinase and Z score columns, and then rename the Z score column
 krsa_ex %>% select(Kinase, Z) %>% 
   rename(Score = Z) -> krsa_ex
 
+kinome_mp_file_v2 %>% view
+
 krsa_ex
 
 ```

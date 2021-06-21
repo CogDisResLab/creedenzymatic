@@ -56,7 +56,8 @@ combine_tools <- function(KRSA_df = NULL, UKA_df = NULL, KEA3_df = NULL, PTM_SEA
       rbind(my_tibble) -> my_tibble
   }
 
-  my_tibble
+  my_tibble %>% dplyr::filter(!is.na(hgnc_symbol))
+
 
 
 
