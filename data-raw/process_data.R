@@ -28,6 +28,7 @@ kinome_mp_file_v2 <- read_delim("data-raw/2021_05_20-creedenzymatic_map.txt", de
 kinome_mp_file_v3 <- read_delim("data-raw/2021_06_11-creedenzymatic_map.txt", delim = "\t") %>%
   mutate_at(c("group", "family", "subfamily", "krsa_id", "uka_id", "kea3_id", "ptmsea_id"), toupper) %>%
   filter(!is.na(hgnc_symbol)) %>%
+  mutate(subfamily = ifelse(subfamily == "N/A", family, subfamily)) %>%
   select(1:26)
 
 
