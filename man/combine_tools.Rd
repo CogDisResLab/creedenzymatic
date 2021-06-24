@@ -9,7 +9,7 @@ combine_tools(
   UKA_df = NULL,
   KEA3_df = NULL,
   PTM_SEA_df = NULL,
-  mapping_df = kinome_mp_file_v2
+  mapping_df = kinome_mp_file_v3
 )
 }
 \arguments{

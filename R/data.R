@@ -30,6 +30,16 @@
 #'
 "kinome_mp_file_v2"
 
+#' CDRL Complete mapping file (UKA+KRSA+KEA3+PTM-SEA)
+#'
+#' A data frame of CDRL Complete mapping file (UKA+KRSA+KEA3+PTM-SEA) (Version 3)
+#'
+#' @format A data frame with 530 rows and 26 variables:
+#' \describe{
+#' }
+#'
+"kinome_mp_file_v3"
+
 
 #' CDRL Complete mapping of peptides to HGNC symbols (STK PamChip 87102)
 #'

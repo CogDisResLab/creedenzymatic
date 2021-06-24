@@ -25,6 +25,12 @@ kinome_mp_file_v2 <- read_delim("data-raw/2021_05_20-creedenzymatic_map.txt", de
   mutate_at(c("class", "group", "family", "subfamily", "krsa_id", "uka_id", "kea3_id", "ptmsea_id"), toupper) %>%
   select(1:12)
 
+kinome_mp_file_v3 <- read_delim("data-raw/2021_06_11-creedenzymatic_map.txt", delim = "\t") %>%
+  mutate_at(c("group", "family", "subfamily", "krsa_id", "uka_id", "kea3_id", "ptmsea_id"), toupper) %>%
+  filter(!is.na(hgnc_symbol)) %>%
+  select(1:26)
+
+
 # peptide to HGNC
 
 stk_pamchip_87102_mapping <- read_delim("data-raw/2021_10_13-JFC_complete-stk_peptides_mapping.txt", delim = "\t") %>%
@@ -56,6 +62,7 @@ rbind(ptk_pamchip_86402_mapping, add_ptk) -> ptk_pamchip_86402_mapping
 usethis::use_data(uka_db_full,
                   kinome_mp_file_v1,
                   kinome_mp_file_v2,
+                  kinome_mp_file_v3,
                   stk_pamchip_87102_mapping,
                   ptk_pamchip_86402_mapping,
                   overwrite = T)
