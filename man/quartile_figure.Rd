@@ -9,7 +9,7 @@ quartile_figure(df, grouping = "KinaseFamily")
 \arguments{
 \item{df}{dataframe, combined mapped tables}
 
-\item{grouping}{character to choose grouping (KinaseFamily or group). Default is KinaseFamily}
+\item{grouping}{character to choose grouping (KinaseFamily, subfamily, or group). Default is KinaseFamily}
 }
 \value{
 ggplot figure

@@ -11,7 +11,7 @@
 #' @export
 #'
 
-quartile_figure <- function(df, grouping = c("KinaseFamily")) {
+quartile_figure <- function(df, grouping = "KinaseFamily") {
 
   df %>%
     dplyr::select(hgnc_symbol, one_of(grouping), Qrt, Method) %>%
@@ -19,12 +19,13 @@ quartile_figure <- function(df, grouping = c("KinaseFamily")) {
     tidyr::pivot_longer(3:ncol(.), names_to = "Method", values_to = "Qrt") %>%
     dplyr::mutate(
       present = ifelse(is.na(Qrt), "No", "Yes"), Qrt = ifelse(present == "No", 2, Qrt),
-      present = factor(present, levels = c("Yes", "No"))
+      present = factor(present, levels = c("Yes", "No")),
+      Qrt = factor(Qrt, levels = c(1,2,3,4))
     ) %>%
-    #filter(KinaseFamily %in% kinases) %>%
     ggplot2::ggplot(ggplot2::aes(hgnc_symbol, Method)) +
     ggplot2::geom_point(ggplot2::aes(size = Qrt, shape = present)) +
-    ggplot2::scale_radius(trans = "reverse") +
+    #gplot2::scale_radius(trans = "reverse") +
+    ggplot2::scale_size_manual(values = c("1" = 4, "2" = 3, "3" = 2, "4" = 1)) +
     ggplot2::theme_bw() +
     {if(grouping == "subfamily") {ggplot2::facet_grid(. ~ subfamily, scales = "free", space = "free")}
       else if(grouping == "group") {ggplot2::facet_grid(. ~ group, scales = "free", space = "free")}
