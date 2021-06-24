@@ -1,7 +1,7 @@
 Package: creedenzymatic
 Type: Package
 Title: creedenzymatic
-Version: 0.1.21
+Version: 0.1.22
 Authors@R: c(
     person("Khaled", "Alganem", email = "khaled.alganem@rockets.utoledo.edu",
         role = c("aut", "cre")
