@@ -18,7 +18,8 @@ quartile_figure <- function(df, grouping = "KinaseFamily") {
     tidyr::pivot_wider(names_from = Method, values_from = Qrt) %>%
     tidyr::pivot_longer(3:ncol(.), names_to = "Method", values_to = "Qrt") %>%
     dplyr::mutate(
-      present = ifelse(is.na(Qrt), "No", "Yes"), Qrt = ifelse(present == "No", 2, Qrt)
+      present = ifelse(is.na(Qrt), "No", "Yes"), Qrt = ifelse(present == "No", 2, Qrt),
+      present = factor(present, levels = c("Yes", "No"))
     ) %>%
     #filter(KinaseFamily %in% kinases) %>%
     ggplot2::ggplot(ggplot2::aes(hgnc_symbol, Method)) +
@@ -26,7 +27,7 @@ quartile_figure <- function(df, grouping = "KinaseFamily") {
     ggplot2::scale_radius(trans = "reverse") +
     ggplot2::theme_bw() +
     {if(grouping == "KinaseFamily") ggplot2::facet_grid(. ~ KinaseFamily, scales = "free", space = "free") else ggplot2::facet_grid(. ~ group, scales = "free", space = "free")}+
-    ggplot2::scale_shape_manual(values=c(1, 19)) +
+    ggplot2::scale_shape_manual(values=c(Yes = 19, No = 1)) +
     ggplot2::theme(axis.text.x = element_text(angle = 30, size = 7.5, vjust = 0.7)) +
     ggplot2::labs(x = "", y = "")
 
