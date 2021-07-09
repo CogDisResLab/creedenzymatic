@@ -15,7 +15,7 @@
 #' @export
 #'
 
-combine_tools <- function(KRSA_df = NULL, UKA_df = NULL, KEA3_df = NULL, PTM_SEA_df = NULL, mapping_df = kinome_mp_file_v3) {
+combine_tools <- function(KRSA_df = NULL, UKA_df = NULL, KEA3_df = NULL, PTM_SEA_df = NULL, mapping_df = kinome_mp_file) {
 
 
   my_tibble <- tibble::tibble(

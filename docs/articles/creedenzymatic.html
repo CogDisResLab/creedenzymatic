@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">creedenzymatic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.24</span>
       </span>
     </div>
 
@@ -99,12 +99,12 @@
 <h1 class="hasAnchor">
 <a href="#input" class="anchor"></a>Input</h1>
 <p>The different kinomic tools (KRSA, UKA, KEA3, PTM-SEA) produce different outputs with various scoring metrics. To standardize the input in this package, we want to extract only two variables from each tool: <strong>Kinase</strong> and <strong>Score.</strong></p>
-<p><strong>Kinase</strong>: will be main identifier used in each tool. For example, in KRSA this variable will indicating kinase family, but with UKA it will be individual kinases.</p>
+<p><strong>Kinase</strong>: will be the main identifier used in each tool. For example, in KRSA this variable will be indicating kinase family, but with UKA it will be individual kinases.</p>
 <p><strong>Score</strong>: The main metric used in the corresponding tool. For example, in KRSA this will be a Z score, in UKA it will be either kinase statistic or kinase score.</p>
 <div id="input-format" class="section level3">
 <h3 class="hasAnchor">
 <a href="#input-format" class="anchor"></a>Input Format</h3>
-<p>The format of the input is a dataframe with two columns: Kinase and Score. Many of these tools give outputs with many columns beyond these two. So, we need to convert the output from these tools to fit the input format needed here. An example from KRSA and UKA is show below.</p>
+<p>The format of the input is a dataframe with two columns: Kinase and Score. Many of these tools give outputs with many columns beyond these two. So, we need to convert the output from these tools to fit the input format needed here. An example from KRSA and UKA is shown below.</p>
 </div>
 <div id="krsa-example" class="section level2">
 <h2 class="hasAnchor">
@@ -136,6 +136,8 @@
 <span class="co"># selecting the Kinase and Z columns, and renaming Z to Score</span>
 <span class="va">krsa_ex</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">Kinase</span>, <span class="va">Z</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">rename</span><span class="op">(</span>Score <span class="op">=</span> <span class="va">Z</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">krsa_ex</span>
+
+<span class="va">kinome_mp_file_v2</span> <span class="op">%&gt;%</span> <span class="va">view</span>
 
 <span class="va">krsa_ex</span>
 <span class="co">#&gt; # A tibble: 24 x 2</span>
@@ -240,7 +242,7 @@
 
 
 <span class="va">combined_df</span>
-<span class="co">#&gt; # A tibble: 152 x 10</span>
+<span class="co">#&gt; # A tibble: 151 x 10</span>
 <span class="co">#&gt;    Kinase Score  Rank Method  Perc   Qrt hgnc_symbol group KinaseFamily</span>
 <span class="co">#&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;       </span>
 <span class="co">#&gt;  1 LCK     2.77     1 UKA    1         1 LCK         TK    SRC         </span>
@@ -253,7 +255,7 @@
 <span class="co">#&gt;  8 PDGFR…  2.06     8 UKA    0.907     1 PDGFRA      TK    PDGFR       </span>
 <span class="co">#&gt;  9 ARG     1.97     9 UKA    0.893     1 ABL2        TK    ABL         </span>
 <span class="co">#&gt; 10 FYN     1.95    10 UKA    0.88      1 FYN         TK    SRC         </span>
-<span class="co">#&gt; # … with 142 more rows, and 1 more variable: subfamily &lt;chr&gt;</span>
+<span class="co">#&gt; # … with 141 more rows, and 1 more variable: subfamily &lt;chr&gt;</span>
 
 <span class="co"># to save file</span>
 <span class="co"># write_delim(combined_df,"ce_combined_ranked_file.txt", delim = "\t")</span></code></pre></div>
@@ -280,8 +282,9 @@
 <span class="co"># an example of file with peptide IDs and LFC</span>
 <span class="va">kea_ex</span> <span class="op">&lt;-</span> <span class="fu">read_delim</span><span class="op">(</span><span class="st">"data_files/KEA3_ex.txt"</span>, delim <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span>
 
-<span class="co"># rename column to Score</span>
-<span class="va">kea_ex</span> <span class="op">%&gt;%</span> <span class="fu">rename</span><span class="op">(</span>Score <span class="op">=</span> <span class="va">totalMeanLFC</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">kea_ex</span>
+<span class="va">kea_ex</span> <span class="op">%&gt;%</span> 
+  <span class="fu">select</span><span class="op">(</span><span class="va">Peptide</span>, Score <span class="op">=</span> <span class="va">totalMeanLFC</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">kea_ex</span>
+
 
 <span class="co"># run kea3, using the peptide list with a cutoff value</span>
 <span class="fu"><a href="../reference/read_kea.html">read_kea</a></span><span class="op">(</span><span class="va">kea_ex</span>, filter <span class="op">=</span> <span class="cn">T</span>, cutoff <span class="op">=</span> <span class="fl">0.4</span>, cutoff_abs <span class="op">=</span> <span class="cn">T</span>, sort <span class="op">=</span> <span class="st">"asc"</span>, trns <span class="op">=</span> <span class="st">"abs"</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">kea_table_ranked</span>
