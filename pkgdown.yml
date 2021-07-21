@@ -3,8 +3,8 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   creedenzymatic: creedenzymatic.html
-last_built: 2021-07-09T17:11Z
+last_built: 2021-07-21T16:17Z
 urls:
-  reference: https://kalganem.github.io/creedenzymatic/index.html/reference
-  article: https://kalganem.github.io/creedenzymatic/index.html/articles
+  reference: https://CogDisResLab.github.io/creedenzymatic/index.html/reference
+  article: https://CogDisResLab.github.io/creedenzymatic/index.html/articles
 
