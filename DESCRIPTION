@@ -8,6 +8,9 @@ Authors@R: c(
     ),
     person("Justin", "Creeden", email = "justin.creeden@rockets.utoledo.edu",
         role = c("aut")
+    ),
+    person("Ali", "Imami", email = "ali.imami@rockets.utoledo.edu",
+        role = c("ctb", "cre")
     )
     )
 Description: Combine kinome results from KRSA and UKA and other tools A package for integrating upstream kinases analyses

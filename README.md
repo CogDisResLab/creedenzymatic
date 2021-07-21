@@ -2,10 +2,10 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![R-CMD-check](https://github.com/kalganem/creedenzymatic/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kalganem/creedenzymatic/actions/workflows/R-CMD-check.yaml)
-[![pkgdown](https://github.com/kalganem/creedenzymatic/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/kalganem/creedenzymatic/actions/workflows/pkgdown.yaml)
+[![R-CMD-check](https://github.com/CogDisResLab/creedenzymatic/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CogDisResLab/creedenzymatic/actions/workflows/R-CMD-check.yaml)
+[![pkgdown](https://github.com/CogDisResLab/creedenzymatic/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/CogDisResLab/creedenzymatic/actions/workflows/pkgdown.yaml)
 [![Build
-Status](https://www.travis-ci.com/kalganem/creedenzymatic.svg?branch=master)](https://www.travis-ci.com/kalganem/creedenzymatic)
+Status](https://www.travis-ci.com/CogDisResLab/creedenzymatic.svg?branch=master)](https://www.travis-ci.com/CogDisResLab/creedenzymatic)
 [![Repo
 Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
@@ -15,7 +15,7 @@ Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repost
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("kalganem/creedenzymatic")
+devtools::install_github("CogDisResLab/creedenzymatic")
 ```
 
 ## creedenzymatic
@@ -25,13 +25,11 @@ integrating upstream kinases analyses)
 
 ## Package Website
 
-<https://kalganem.github.io/creedenzymatic/>
+<https://CogDisResLab.github.io/creedenzymatic/>
 
 # Contact
 
 For technical issues, please start a new issue on this repo:
-[Link](https://github.com/kalganem/creedenzymatic/issues)
+[Link](https://github.com/CogDisResLab/creedenzymatic/issues)
 
-For biological interpretation questions please email:
-<khaled.alganem@rockets.utoledo.edu> or
-<justin.creeden@rockets.utoledo.edu>
+For biological interpretation questions please email: <cdrl@utoledo.edu>

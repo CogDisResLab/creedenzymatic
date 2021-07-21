@@ -52,7 +52,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/kalganem/creedenzymatic">
+  <a href="https://github.com/CogDisResLab/creedenzymatic">
     <span class="fab fa-github"></span>
      
   </a>
@@ -67,7 +67,7 @@
 
       
 
-      </header><script src="creedenzymatic_files/header-attrs-2.6/header-attrs.js"></script><div class="row">
+      </header><script src="creedenzymatic_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>creedenzymatic</h1>
@@ -166,22 +166,22 @@
 
 <span class="va">uka_ex</span>
 <span class="co">#&gt; # A tibble: 76 x 10</span>
-<span class="co">#&gt;    `Kinase Uniprot… `Kinase Name` `Mean Specifici… `Mean Significa…</span>
-<span class="co">#&gt;    &lt;chr&gt;            &lt;chr&gt;                    &lt;dbl&gt;            &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 P06239           Lck                      1.82              1.03</span>
-<span class="co">#&gt;  2 P07948           Lyn                      1.54              1.03</span>
-<span class="co">#&gt;  3 Q04912           Ron                      1.07              1.03</span>
-<span class="co">#&gt;  4 P42685           FRK                      1.30              1.03</span>
-<span class="co">#&gt;  5 P00519           Abl                      1.33              1.03</span>
-<span class="co">#&gt;  6 Q06418           Tyro3/Sky                1.12              1.03</span>
-<span class="co">#&gt;  7 P12931           Src                      0.994             1.03</span>
-<span class="co">#&gt;  8 P16234           PDGFR[alpha]             0.910             1.03</span>
-<span class="co">#&gt;  9 P42684           Arg                      0.959             1.03</span>
-<span class="co">#&gt; 10 P06241           Fyn                      1.04              1.03</span>
-<span class="co">#&gt; # … with 66 more rows, and 6 more variables: `Mean Final Score` &lt;dbl&gt;, `Median</span>
-<span class="co">#&gt; #   Final score` &lt;dbl&gt;, `Mean Kinase Statistic` &lt;dbl&gt;, `Median Kinase</span>
-<span class="co">#&gt; #   Statistic` &lt;dbl&gt;, `SD Kinase Statitistic` &lt;dbl&gt;, `Mean peptide set</span>
-<span class="co">#&gt; #   size` &lt;dbl&gt;</span></code></pre></div>
+<span class="co">#&gt;    `Kinase Uniprot I… `Kinase Name` `Mean Specificity Sco… `Mean Significance S…</span>
+<span class="co">#&gt;    &lt;chr&gt;              &lt;chr&gt;                          &lt;dbl&gt;                 &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 P06239             Lck                            1.82                   1.03</span>
+<span class="co">#&gt;  2 P07948             Lyn                            1.54                   1.03</span>
+<span class="co">#&gt;  3 Q04912             Ron                            1.07                   1.03</span>
+<span class="co">#&gt;  4 P42685             FRK                            1.30                   1.03</span>
+<span class="co">#&gt;  5 P00519             Abl                            1.33                   1.03</span>
+<span class="co">#&gt;  6 Q06418             Tyro3/Sky                      1.12                   1.03</span>
+<span class="co">#&gt;  7 P12931             Src                            0.994                  1.03</span>
+<span class="co">#&gt;  8 P16234             PDGFR[alpha]                   0.910                  1.03</span>
+<span class="co">#&gt;  9 P42684             Arg                            0.959                  1.03</span>
+<span class="co">#&gt; 10 P06241             Fyn                            1.04                   1.03</span>
+<span class="co">#&gt; # … with 66 more rows, and 6 more variables: Mean Final Score &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   Median Final score &lt;dbl&gt;, Mean Kinase Statistic &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   Median Kinase Statistic &lt;dbl&gt;, SD Kinase Statitistic &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   Mean peptide set size &lt;dbl&gt;</span></code></pre></div>
 <p>Let’s say we want the final score as the metric we want to use, so we select the two columns: kinase and median final score</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -243,18 +243,18 @@
 
 <span class="va">combined_df</span>
 <span class="co">#&gt; # A tibble: 151 x 10</span>
-<span class="co">#&gt;    Kinase Score  Rank Method  Perc   Qrt hgnc_symbol group KinaseFamily</span>
-<span class="co">#&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;       </span>
-<span class="co">#&gt;  1 LCK     2.77     1 UKA    1         1 LCK         TK    SRC         </span>
-<span class="co">#&gt;  2 LYN     2.52     2 UKA    0.987     1 LYN         TK    SRC         </span>
-<span class="co">#&gt;  3 RON     2.50     3 UKA    0.973     1 MST1R       TK    MET         </span>
-<span class="co">#&gt;  4 FRK     2.35     4 UKA    0.96      1 FRK         TK    SRC         </span>
-<span class="co">#&gt;  5 ABL     2.29     5 UKA    0.947     1 ABL1        TK    ABL         </span>
-<span class="co">#&gt;  6 TYRO3…  2.19     6 UKA    0.933     1 TYRO3       TK    AXL         </span>
-<span class="co">#&gt;  7 SRC     2.07     7 UKA    0.92      1 SRC         TK    SRC         </span>
-<span class="co">#&gt;  8 PDGFR…  2.06     8 UKA    0.907     1 PDGFRA      TK    PDGFR       </span>
-<span class="co">#&gt;  9 ARG     1.97     9 UKA    0.893     1 ABL2        TK    ABL         </span>
-<span class="co">#&gt; 10 FYN     1.95    10 UKA    0.88      1 FYN         TK    SRC         </span>
+<span class="co">#&gt;    Kinase       Score  Rank Method  Perc   Qrt hgnc_symbol group KinaseFamily</span>
+<span class="co">#&gt;    &lt;chr&gt;        &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;       </span>
+<span class="co">#&gt;  1 LCK           2.77     1 UKA    1         1 LCK         TK    SRC         </span>
+<span class="co">#&gt;  2 LYN           2.52     2 UKA    0.987     1 LYN         TK    SRC         </span>
+<span class="co">#&gt;  3 RON           2.50     3 UKA    0.973     1 MST1R       TK    MET         </span>
+<span class="co">#&gt;  4 FRK           2.35     4 UKA    0.96      1 FRK         TK    SRC         </span>
+<span class="co">#&gt;  5 ABL           2.29     5 UKA    0.947     1 ABL1        TK    ABL         </span>
+<span class="co">#&gt;  6 TYRO3/SKY     2.19     6 UKA    0.933     1 TYRO3       TK    AXL         </span>
+<span class="co">#&gt;  7 SRC           2.07     7 UKA    0.92      1 SRC         TK    SRC         </span>
+<span class="co">#&gt;  8 PDGFR[ALPHA]  2.06     8 UKA    0.907     1 PDGFRA      TK    PDGFR       </span>
+<span class="co">#&gt;  9 ARG           1.97     9 UKA    0.893     1 ABL2        TK    ABL         </span>
+<span class="co">#&gt; 10 FYN           1.95    10 UKA    0.88      1 FYN         TK    SRC         </span>
 <span class="co">#&gt; # … with 141 more rows, and 1 more variable: subfamily &lt;chr&gt;</span>
 
 <span class="co"># to save file</span>
@@ -315,7 +315,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Khaled Alganem, Justin Creeden.</p>
+  <p>Developed by Khaled Alganem, Justin Creeden, Ali Imami.</p>
 </div>
 
 <div class="pkgdown">

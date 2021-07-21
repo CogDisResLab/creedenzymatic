@@ -1,4 +1,4 @@
-url: https://kalganem.github.io/creedenzymatic/index.html
+url: https://CogDisResLab.github.io/creedenzymatic/index.html
 
 template:
   params:
@@ -18,6 +18,6 @@ navbar:
   components:
      github:
        icon: "fab fa-github"
-       href: https://github.com/kalganem/creedenzymatic
+       href: https://github.com/CogDisResLab/creedenzymatic
 
 
