@@ -4,7 +4,91 @@
     <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/index.html</loc>
   </url>
   <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/GCT-class.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/annotate.gct.html</loc>
+  </url>
+  <url>
     <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/combine_tools.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/creedenzymatic.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-align_matrices.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-append.dim.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-check_colnames.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-check_dups.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-extract.gct.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-fix.datatypes.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-is.wholenumber.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-merge_with_precedence.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-na_pad_matrix.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-parse.gctx.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-parse.gmt.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-parse.gmx.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-parse.grp.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-process_ids.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-read.gctx.ids.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-read.gctx.meta.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-subset_to_ids.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-update.gctx.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-write.gct.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-write.gctx.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-write.gctx.meta.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-write.gmt.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-write.grp.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/dot-write.tbl.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/extract_top_kinases.html</loc>
   </url>
   <url>
     <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/kinome_mp_file.html</loc>
@@ -22,6 +106,12 @@
     <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/kinome_mp_file_v4.html</loc>
   </url>
   <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/melt.gct.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/merge.gct.html</loc>
+  </url>
+  <url>
     <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/ptk_pamchip_86402_array_layout_ptmsea.html</loc>
   </url>
   <url>
@@ -29,6 +119,9 @@
   </url>
   <url>
     <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/quartile_figure.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/rank.gct.html</loc>
   </url>
   <url>
     <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/rank_kinases.html</loc>
@@ -40,6 +133,9 @@
     <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/read_krsa.html</loc>
   </url>
   <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/read_ptmsea.html</loc>
+  </url>
+  <url>
     <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/read_uka.html</loc>
   </url>
   <url>
@@ -49,10 +145,19 @@
     <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/run_kea.html</loc>
   </url>
   <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/run_ptmsea.html</loc>
+  </url>
+  <url>
     <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/stk_pamchip_87102_array_layout_ptmsea.html</loc>
   </url>
   <url>
     <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/stk_pamchip_87102_mapping.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/subset.gct.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/transpose.gct.html</loc>
   </url>
   <url>
     <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/uka_db_full.html</loc>
