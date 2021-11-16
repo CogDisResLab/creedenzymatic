@@ -51,8 +51,10 @@ combine_tools <- function(KRSA_df = NULL, UKA_df = NULL, KEA3_df = NULL, PTM_SEA
   }
 
   if(!is.null(PTM_SEA_df)) {
-    dplyr::left_join(PTM_SEA_df %>% mutate(Kinase = toupper(Kinase)), dplyr::select(mapping_df, ptmsea_id, hgnc_symbol, group, family, subfamily), by = c("Kinase" = "ptmsea_id")) %>%
+    dplyr::left_join(PTM_SEA_df %>% mutate(Kinase = toupper(Kinase)), dplyr::select(mapping_df, ptmsea_id, hgnc_symbol, group, family, subfamily), by = c("Kinase" = "hgnc_symbol")) %>%
       dplyr::rename(KinaseFamily = family) %>%
+      mutate(hgnc_symbol = Kinase) %>%
+      select(-ptmsea_id) %>%
       rbind(my_tibble) -> my_tibble
   }
 
