@@ -20,12 +20,13 @@ quartile_figure <- function(df, grouping = "KinaseFamily") {
     dplyr::mutate(
       present = ifelse(is.na(Qrt), "No", "Yes"), Qrt = ifelse(present == "No", 2, Qrt),
       present = factor(present, levels = c("Yes", "No")),
-      Qrt = factor(Qrt, levels = c(1,2,3,4))
+      Qrt = factor(Qrt, levels = c(1,2,3,4)),
+      Method = factor(Method, levels = c("UKA", "PTM-SEA", "KEA3", "KRSA"))
     ) %>%
     ggplot2::ggplot(ggplot2::aes(hgnc_symbol, Method)) +
     ggplot2::geom_point(ggplot2::aes(size = Qrt, shape = present)) +
     #gplot2::scale_radius(trans = "reverse") +
-    ggplot2::scale_size_manual(values = c("1" = 4, "2" = 3, "3" = 2, "4" = 1)) +
+    ggplot2::scale_size_manual(values = c("4" = 4, "3" = 3, "2" = 2, "1" = 1)) +
     ggplot2::theme_bw() +
     {if(grouping == "subfamily") {ggplot2::facet_grid(. ~ subfamily, scales = "free", space = "free")}
       else if(grouping == "group") {ggplot2::facet_grid(. ~ group, scales = "free", space = "free")}

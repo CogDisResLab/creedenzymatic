@@ -50,10 +50,10 @@ rank_kinases <- function(df, trns = c("raw", "abs"), sort = c("desc", "asc"), to
            }
              ,
            Qrt = dplyr::case_when(
-             1 <= Perc | Perc >= 0.75  ~ 1,
-             0.75 < Perc | Perc >= 0.5  ~ 2,
-             0.5 < Perc | Perc >= 0.25  ~ 3,
-             0.25 < Perc | Perc >= 0  ~ 4
+             1 <= Perc | Perc >= 0.75  ~ 4,
+             0.75 < Perc | Perc >= 0.5  ~ 3,
+             0.5 < Perc | Perc >= 0.25  ~ 2,
+             0.25 < Perc | Perc >= 0  ~ 1
            ))
 
 

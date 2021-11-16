@@ -1,9 +1,10 @@
-#library(cmapR)
+library(cmapR)
 library(dplyr)
 library(readr)
 
 #source("data-raw/PTM_SEA_DB/gct-io.R")
 source("data-raw/PTM_SEA_DB/ssGSEA2.0.R")
+source("data-raw/PTM_SEA_DB/ssGSEA2.0_ce_version.R")
 
 res <- ssGSEA2(
   input.ds=opt$input.ds,
@@ -65,11 +66,33 @@ res <- ssGSEA2(input.ds = "data-raw/PTM_SEA_DB/PDCL15vsWT_input_PTM-SEA.gct_n1x1
                correl.type =	"z.score"
 )
 
+res <- ssGSEA2_ce(input.ds = my_new_ds,
+               output.prefix = "test_ce",
+               gene.set.databases = c(#"data-raw/PTM_SEA_DB/stk_pamchip_87102_onlyChipPeps_dbs.gmt",
+                                      "data-raw/PTM_SEA_DB/ptk_pamchip_86402_onlyChipPeps_dbs.gmt"),
+               nperm = 1000,
+               export.signat.gct=F,
+               sample.norm.type = 	"rank",
+               #global.fdr = T,
+               weight = 	0.75,
+               statistic =	"area.under.RES",
+               output.score.type = 	"NES",
+               min.overlap = 1,
+               correl.type =	"z.score"
+)
+
+
+
+
 res %>%  as.data.frame() -> output_res
 
 res %>% lapply(`[[`, 1) %>%
   lapply(`[[`, 1) %>% as.data.frame() %>%
-  pivot_longer(cols = 1:ncol(.), names_to = "Set", values_to = "ES") %>% view()
+  pivot_longer(cols = 1:ncol(.), names_to = "Set", values_to = "ES") %>%
+  mutate(Kinase = str_extract(Set, "_.+"),
+         Kinase = str_remove(Kinase, "_"),
+         Kinase = str_replace(Kinase, "\\.", "/") %>% toupper()
+  ) %>% dplyr::select(Kinase, Score = ES)
 
 data_frame_res <- as.data.frame(do.call(rbind, res)) %>%
   rownames_to_column("Set") %>%
@@ -95,3 +118,16 @@ output_res %>% select(Kinase, fdr.pvalue.totalGeoMeanLFC) %>%
   theme_bw() +
   labs(x = "", y = "-log10 adj P Value")
 
+
+ex <- cmapR::parse_gctx("test_ce-combined.gct")
+ex <- cmapR::parse_gctx("test_ce-scores.gct")
+
+ptmsea_all <- cmapR::parse_gmt("data-raw/PTM_SEA_DB/stk_pamchip_87102_onlyChipPeps_dbs.gmt")
+readLines(ptmsea_all)
+
+rl_ex <- readLines("data-raw/PTM_SEA_DB/stk_pamchip_87102_onlyChipPeps_dbs.gmt")
+rl_ex
+
+for (x in c(list(ptk_pamchip_86402_onlyChipPeps_dbs), list(stk_pamchip_87102_onlyChipPeps_dbs))) {
+  print(x)
+}

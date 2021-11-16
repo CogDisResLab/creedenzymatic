@@ -6,11 +6,13 @@
 \usage{
 read_kea(
   df,
-  filter,
-  cutoff,
+  filter = T,
+  cutoff = 0.2,
   cutoff_abs = T,
   direction = "higher",
-  lib = c("kinases"),
+  rm_duplicates = T,
+  method = "MeanRank",
+  lib = c("kinase-substrate"),
   ...
 )
 }
@@ -23,9 +25,13 @@ read_kea(
 
 \item{cutoff_abs}{boolean (use absolute value or not) default is TRUE}
 
-\item{direction}{("lower", "higher) filter based on less than or bigger than the cutoff values (default to "higher")}
+\item{direction}{("lower", "higher) filter based on lower than or higher than the cutoff values (default to "higher")}
 
-\item{lib}{searched kea libraries (default is "kinases" which will return only kinase libraries like ChengKSIN, PTMsigDB, PhosDAll)}
+\item{rm_duplicates}{boolean (TRUE or FALSE) remove genes duplicates}
+
+\item{method}{"MeanRank" takes the mean rank across all libraries or "MeanFDR" takes the mean of FDR across all libraries (default is "MeanRank")}
+
+\item{lib}{searched kea libraries "kinase-substrate" or "all" (default is "kinase-substrate" which will return only kinase libraries like ChengKSIN, PTMsigDB, PhosDAll)}
 
 \item{..., }{arguments passed to rank_kinases function}
 }

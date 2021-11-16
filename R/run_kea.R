@@ -3,7 +3,7 @@
 #' This function takes in HGNC gene symbols and connect to KEA3 API and returns results
 #'
 #' @param gene_set vector, HGNC gene symbols based on the differentially phosphorylated peptides
-#' @param lib searched kea libraries (default is "kinases" which will return only kinase libraries like ChengKSIN, PTMsigDB, PhosDAll)
+#' @param lib searched kea libraries "kinase-substrate" or "all" (default is "kinase-substrate" which will return only kinase libraries like ChengKSIN, PTMsigDB, PhosDAll)
 #'
 #' @return list, tables from each KEA3 library
 #'
@@ -12,7 +12,7 @@
 #'
 #'
 
-run_kea <- function(gene_set, lib = c("kinases")) {
+run_kea <- function(gene_set, lib = "kinase-substrate") {
 
   rbind(stk_pamchip_87102_mapping, ptk_pamchip_86402_mapping) %>%
     dplyr::filter(ID %in% gene_set)
@@ -26,16 +26,26 @@ run_kea <- function(gene_set, lib = c("kinases")) {
     json <-  httr::content(response, "text")
     results <-  jsonlite::fromJSON(json)
 
-    if(lib == "kinases") {
-      results[names(results) %in% c("PTMsigDB", "ChengKSIN", "PhosDAll")]
+    if(lib == "kinase-substrate") {
+      results <- results[names(results) %in% c("PTMsigDB", "ChengKSIN", "PhosDAll")]
+
+      purrr::map_df(results, base::rbind) %>%
+        dplyr::select(TF, Rank) %>%
+        dplyr::mutate(Rank = as.numeric(Rank)) %>%
+        dplyr::group_by(TF) %>%
+        dplyr::summarise(Score = mean(Rank)) %>%
+        dplyr::ungroup() -> integrated_results_df
+
+      results$`Integrated--meanRank` <- integrated_results_df
+
+      results
+
     }
 
     else {
       results
     }
 
-    # body_res$data[[1]] %>% enframe() %>% unnest(cols = c("value")) %>%
-    #   pivot_wider(names_from = name, values_from = value)
 
   }
   else {

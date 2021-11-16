@@ -1,7 +1,7 @@
 Package: creedenzymatic
 Type: Package
 Title: creedenzymatic
-Version: 0.1.24
+Version: 0.1.31
 Authors@R: c(
     person("Khaled", "Alganem", email = "khaled.alganem@rockets.utoledo.edu",
         role = c("aut", "cre")
@@ -28,7 +28,10 @@ Imports:
     dplyr,
     httr,
     jsonlite,
-    purrr
+    purrr,
+    gtools,
+    verification,
+    foreach
 RoxygenNote: 7.1.1
 Depends: 
     R (>= 2.10)

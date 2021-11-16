@@ -4,12 +4,12 @@
 \alias{run_kea}
 \title{Run KEA3 API based on a set of gene symbols}
 \usage{
-run_kea(gene_set, lib = c("kinases"))
+run_kea(gene_set, lib = "kinase-substrate")
 }
 \arguments{
 \item{gene_set}{vector, HGNC gene symbols based on the differentially phosphorylated peptides}
 
-\item{lib}{searched kea libraries (default is "kinases" which will return only kinase libraries like ChengKSIN, PTMsigDB, PhosDAll)}
+\item{lib}{searched kea libraries "kinase-substrate" or "all" (default is "kinase-substrate" which will return only kinase libraries like ChengKSIN, PTMsigDB, PhosDAll)}
 }
 \value{
 list, tables from each KEA3 library
