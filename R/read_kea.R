@@ -8,8 +8,10 @@
 #' @param filter boolean to subset peptides or not
 #' @param cutoff numeric to act as the cutoff to filter out peptides
 #' @param cutoff_abs boolean (use absolute value or not) default is TRUE
-#' @param direction ("lower", "higher) filter based on less than or bigger than the cutoff values (default to "higher")
-#' @param lib searched kea libraries (default is "kinases" which will return only kinase libraries like ChengKSIN, PTMsigDB, PhosDAll)
+#' @param direction ("lower", "higher) filter based on lower than or higher than the cutoff values (default to "higher")
+#' @param rm_duplicates boolean (TRUE or FALSE) remove genes duplicates
+#' @param method "MeanRank" takes the mean rank across all libraries or "MeanFDR" takes the mean of FDR across all libraries (default is "MeanRank")
+#' @param lib searched kea libraries "kinase-substrate" or "all" (default is "kinase-substrate" which will return only kinase libraries like ChengKSIN, PTMsigDB, PhosDAll)
 
 #' @param ..., arguments passed to rank_kinases function
 #'
@@ -18,7 +20,7 @@
 #' @export
 #'
 
-read_kea <- function(df, filter, cutoff, cutoff_abs = T,direction = "higher", lib = c("kinases"), ...) {
+read_kea <- function(df, filter = T, cutoff = 0.2, cutoff_abs = T, direction = "higher", rm_duplicates = T, method = "MeanRank" , lib = c("kinase-substrate"), ...) {
 
 
   if(!is.data.frame(df)) {stop("Make sure your input is a dataframe")}
@@ -71,20 +73,33 @@ read_kea <- function(df, filter, cutoff, cutoff_abs = T,direction = "higher", li
     dplyr::filter(!is.na(HGNC)) %>%
     dplyr::pull(HGNC) -> pep_hits
 
-  #pep_hits <- na.omit(pep_hits)
+  if(rm_duplicates == T) {
+    message(paste0("Removed ", length(setdiff(pep_hits, unique(pep_hits))), " gene duplicates"))
+    pep_hits <- unique(pep_hits)
+  }
 
-  message(length(pep_hits))
+
+  message(paste0("Total # of genes ", length(pep_hits)))
 
   run_kea(pep_hits, lib) -> kea_results
 
   if(!all(is.na(kea_results))) {
-    purrr::map_df(kea_results, base::rbind) %>%
-      dplyr::select(TF, FDR) %>%
-      dplyr::mutate(FDR = as.numeric(FDR)) %>%
-      dplyr::group_by(TF) %>%
-      dplyr::summarise(Score = mean(FDR)) %>%
-      dplyr::ungroup() %>%
-      dplyr::rename(Kinase = TF) -> kea_results
+
+    if(method == "MeanRank") {
+      kea_results <- kea_results$`Integrated--meanRank` %>%
+        select(TF, Score) %>%
+        rename(Kinase = TF)
+    }
+
+    else {
+      purrr::map_df(kea_results, base::rbind) %>%
+        dplyr::select(TF, FDR) %>%
+        dplyr::mutate(FDR = as.numeric(FDR)) %>%
+        dplyr::group_by(TF) %>%
+        dplyr::summarise(Score = mean(FDR)) %>%
+        dplyr::ungroup() %>%
+        dplyr::rename(Kinase = TF) -> kea_results
+    }
 
     rank_kinases(kea_results, tool = "KEA3", ...)
   }

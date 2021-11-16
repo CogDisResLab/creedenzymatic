@@ -30,6 +30,8 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(creedenzymatic)
 library(tidyverse)
+
+theme_set(theme_bw())
 ```
 
 # Input
@@ -65,7 +67,6 @@ Now we select the Kinase and Z score columns, and then rename the Z score column
 krsa_ex %>% select(Kinase, Z) %>% 
   rename(Score = Z) -> krsa_ex
 
-kinome_mp_file_v2 %>% view
 
 krsa_ex
 
@@ -130,13 +131,13 @@ combined_df
 
 ```
 
-We can visualize the results using the quartile_figure() function (which will return a ggplot). Let's we want to plot all of the kinases found in quartile 1 or 2 either in KRSA or UKA. 
+We can visualize the results using the quartile_figure() function (which will return a ggplot). Let's we want to plot all of the kinases found in quartile 3 or 4 either in KRSA or UKA. 
 
 ```{r, fig.align="center", fig.height=6,fig.width=12}
 
-# filter out kinases found in quartile 1 or 2 either in KRSA or UKA and use the quartile_figure() for visualization
+# filter out kinases found in quartile 3 or 4 either in KRSA or UKA and use the quartile_figure() for visualization
 
-combined_df %>% filter(Qrt <= 2) %>% 
+combined_df %>% filter(Qrt >= 3) %>% 
   pull(hgnc_symbol) %>% unique() -> sig_kinases
 
 combined_df %>% 
@@ -145,7 +146,6 @@ combined_df %>%
 
 
 ```
-
 
 # KEA3
 
@@ -159,9 +159,9 @@ kea_ex <- read_delim("data_files/KEA3_ex.txt", delim = "\t")
 kea_ex %>% 
   select(Peptide, Score = totalMeanLFC) -> kea_ex
 
-
 # run kea3, using the peptide list with a cutoff value
-read_kea(kea_ex, filter = T, cutoff = 0.4, cutoff_abs = T, sort = "asc", trns = "abs") -> kea_table_ranked
+read_kea(kea_ex, filter = T, cutoff = 0.4, cutoff_abs = T, sort = "asc", trns = "abs",
+        rm_duplicates = T, method = "MeanRank", lib = "kinase-substrate") -> kea_table_ranked
 
 # quartile figure using kinase family as the grouping factor
 combine_tools(KRSA_df = krsa_table_ranked, UKA_df = uka_table_ranked, KEA3_df = kea_table_ranked) %>% 
@@ -176,3 +176,39 @@ combine_tools(KRSA_df = krsa_table_ranked, UKA_df = uka_table_ranked, KEA3_df = 
 
 ```
 
+# PTM-SEA
+
+To run PTM-SEA, we need the LFC table of peptides as an input (Same input as KEA3)
+
+```{r, fig.align="center", fig.height=6,fig.width=12}
+
+
+read_ptmsea(kea_ex) -> ptm_table_ranked
+
+
+# quartile figure using kinase family as the grouping factor
+combine_tools(KRSA_df = krsa_table_ranked, UKA_df = uka_table_ranked, 
+              KEA3_df = kea_table_ranked, PTM_SEA_df =ptm_table_ranked ) %>%
+  filter(hgnc_symbol %in% sig_kinases) %>% 
+  quartile_figure()
+
+
+
+
+```
+
+
+
+```{r, fig.align="center", fig.height=12,fig.width=6}
+
+# load("data_files/runData.RData")
+# 
+# aFull %>% 
+#   select(ClassName, SetStat) %>% 
+#   group_by(ClassName) %>% 
+#   mutate(meanSetStat = mean(SetStat,na.rm = T)) %>% ungroup() %>% 
+#   ggplot(aes(reorder(ClassName, meanSetStat), SetStat)) +
+#   geom_boxplot(aes(fill = meanSetStat)) +
+#   coord_flip()
+
+```

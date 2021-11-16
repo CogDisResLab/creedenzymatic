@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">creedenzymatic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.24</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.31</span>
       </span>
     </div>
 
@@ -122,11 +122,13 @@
 
     <pre class="usage"><span class='fu'>read_kea</span><span class='op'>(</span>
   <span class='va'>df</span>,
-  <span class='va'>filter</span>,
-  <span class='va'>cutoff</span>,
+  filter <span class='op'>=</span> <span class='cn'>T</span>,
+  cutoff <span class='op'>=</span> <span class='fl'>0.2</span>,
   cutoff_abs <span class='op'>=</span> <span class='cn'>T</span>,
   direction <span class='op'>=</span> <span class='st'>"higher"</span>,
-  lib <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"kinases"</span><span class='op'>)</span>,
+  rm_duplicates <span class='op'>=</span> <span class='cn'>T</span>,
+  method <span class='op'>=</span> <span class='st'>"MeanRank"</span>,
+  lib <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"kinase-substrate"</span><span class='op'>)</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -151,11 +153,19 @@
     </tr>
     <tr>
       <th>direction</th>
-      <td><p>("lower", "higher) filter based on less than or bigger than the cutoff values (default to "higher")</p></td>
+      <td><p>("lower", "higher) filter based on lower than or higher than the cutoff values (default to "higher")</p></td>
+    </tr>
+    <tr>
+      <th>rm_duplicates</th>
+      <td><p>boolean (TRUE or FALSE) remove genes duplicates</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>"MeanRank" takes the mean rank across all libraries or "MeanFDR" takes the mean of FDR across all libraries (default is "MeanRank")</p></td>
     </tr>
     <tr>
       <th>lib</th>
-      <td><p>searched kea libraries (default is "kinases" which will return only kinase libraries like ChengKSIN, PTMsigDB, PhosDAll)</p></td>
+      <td><p>searched kea libraries "kinase-substrate" or "all" (default is "kinase-substrate" which will return only kinase libraries like ChengKSIN, PTMsigDB, PhosDAll)</p></td>
     </tr>
     <tr>
       <th>..., </th>
