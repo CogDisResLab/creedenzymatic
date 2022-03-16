@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/404.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/articles/creedenzymatic.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/authors.html</loc>
+  </url>
+  <url>
     <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/index.html</loc>
   </url>
   <url>
@@ -91,6 +109,9 @@
     <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/extract_top_kinases.html</loc>
   </url>
   <url>
+    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/index.html</loc>
+  </url>
+  <url>
     <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/kinome_mp_file.html</loc>
   </url>
   <url>
@@ -161,8 +182,5 @@
   </url>
   <url>
     <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/reference/uka_db_full.html</loc>
-  </url>
-  <url>
-    <loc>https://CogDisResLab.github.io/creedenzymatic/index.html/articles/creedenzymatic.html</loc>
   </url>
 </urlset>

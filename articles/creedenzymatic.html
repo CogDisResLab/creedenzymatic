@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,12 +40,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/creedenzymatic.html">Get started</a>
 </li>
 <li>
@@ -52,7 +48,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/CogDisResLab/creedenzymatic">
+  <a href="https://github.com/CogDisResLab/creedenzymatic" class="external-link">
     <span class="fab fa-github"></span>
      
   </a>
@@ -80,135 +76,135 @@
 
     
     
-<div id="intro" class="section level1">
-<h1 class="hasAnchor">
-<a href="#intro" class="anchor"></a>Intro</h1>
+<div class="section level2">
+<h2 id="intro">Intro<a class="anchor" aria-label="anchor" href="#intro"></a>
+</h2>
 <p><em>creedenzymatic</em> is a pipeline R package to combine, standardize and visualize kinomic analyses from different tools (KRSA, UKA, KEA3, PTM-SEA)</p>
 </div>
-<div id="installation" class="section level1">
-<h1 class="hasAnchor">
-<a href="#installation" class="anchor"></a>installation</h1>
+<div class="section level2">
+<h2 id="installation">installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
 <span class="co">#devtools::install_github("kalganem/creedenzymatic")</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">creedenzymatic</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">creedenzymatic</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
 
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="input" class="section level1">
-<h1 class="hasAnchor">
-<a href="#input" class="anchor"></a>Input</h1>
+<div class="section level2">
+<h2 id="input">Input<a class="anchor" aria-label="anchor" href="#input"></a>
+</h2>
 <p>The different kinomic tools (KRSA, UKA, KEA3, PTM-SEA) produce different outputs with various scoring metrics. To standardize the input in this package, we want to extract only two variables from each tool: <strong>Kinase</strong> and <strong>Score.</strong></p>
 <p><strong>Kinase</strong>: will be the main identifier used in each tool. For example, in KRSA this variable will be indicating kinase family, but with UKA it will be individual kinases.</p>
 <p><strong>Score</strong>: The main metric used in the corresponding tool. For example, in KRSA this will be a Z score, in UKA it will be either kinase statistic or kinase score.</p>
-<div id="input-format" class="section level3">
-<h3 class="hasAnchor">
-<a href="#input-format" class="anchor"></a>Input Format</h3>
+<div class="section level4">
+<h4 id="input-format">Input Format<a class="anchor" aria-label="anchor" href="#input-format"></a>
+</h4>
 <p>The format of the input is a dataframe with two columns: Kinase and Score. Many of these tools give outputs with many columns beyond these two. So, we need to convert the output from these tools to fit the input format needed here. An example from KRSA and UKA is shown below.</p>
 </div>
-<div id="krsa-example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#krsa-example" class="anchor"></a>KRSA Example</h2>
+<div class="section level3">
+<h3 id="krsa-example">KRSA Example<a class="anchor" aria-label="anchor" href="#krsa-example"></a>
+</h3>
 <p>Usually the final KRSA output has many columns like: Kinase, SamplingAverage, SD, Z, … etc. So, we need to read that file and only select Kinase and Z score columns, and then rename the Z score column to “Score”</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="co"># reading an example of KRSA output</span>
-<span class="va">krsa_ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_delim</a></span><span class="op">(</span><span class="st">"data_files/KRSA_ex.txt"</span>, delim <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span>
+<span class="va">krsa_ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_delim</a></span><span class="op">(</span><span class="st">"data_files/KRSA_ex.txt"</span>, delim <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span>
 
 <span class="va">krsa_ex</span>
-<span class="co">#&gt; # A tibble: 24 × 5</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 24 × 5</span></span>
 <span class="co">#&gt;    Kinase Observed SamplingAvg    SD     Z</span>
-<span class="co">#&gt;    &lt;chr&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 DDR          31       21.1   2.65 3.71 </span>
-<span class="co">#&gt;  2 TEC          92       81.9   3.09 3.26 </span>
-<span class="co">#&gt;  3 SRC         101       94.6   2.70 2.36 </span>
-<span class="co">#&gt;  4 ABL          44       37.6   3.14 2.03 </span>
-<span class="co">#&gt;  5 PDGFR        86       80.0   3.19 1.89 </span>
-<span class="co">#&gt;  6 INSR         24       19.4   2.51 1.83 </span>
-<span class="co">#&gt;  7 FRK          11        7.90  1.70 1.83 </span>
-<span class="co">#&gt;  8 MET          23       20.5   2.61 0.945</span>
-<span class="co">#&gt;  9 SYK          78       75.0   3.23 0.930</span>
-<span class="co">#&gt; 10 CSK          45       42.0   3.34 0.912</span>
-<span class="co">#&gt; # … with 14 more rows</span></code></pre></div>
+<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> DDR          31       21.1   2.65 3.71 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> TEC          92       81.9   3.09 3.26 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> SRC         101       94.6   2.70 2.36 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> ABL          44       37.6   3.14 2.03 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> PDGFR        86       80.0   3.19 1.89 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> INSR         24       19.4   2.51 1.83 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> FRK          11        7.90  1.70 1.83 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> MET          23       20.5   2.61 0.945</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> SYK          78       75.0   3.23 0.930</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> CSK          45       42.0   3.34 0.912</span>
+<span class="co">#&gt; <span style="color: #949494;"># … with 14 more rows</span></span></code></pre></div>
 <p>Now we select the Kinase and Z score columns, and then rename the Z score column to “Score”</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="co"># selecting the Kinase and Z columns, and renaming Z to Score</span>
-<span class="va">krsa_ex</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Kinase</span>, <span class="va">Z</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>Score <span class="op">=</span> <span class="va">Z</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">krsa_ex</span>
+<span class="va">krsa_ex</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Kinase</span>, <span class="va">Z</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>Score <span class="op">=</span> <span class="va">Z</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">krsa_ex</span>
 
 
 <span class="va">krsa_ex</span>
-<span class="co">#&gt; # A tibble: 24 × 2</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 24 × 2</span></span>
 <span class="co">#&gt;    Kinase Score</span>
-<span class="co">#&gt;    &lt;chr&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 DDR    3.71 </span>
-<span class="co">#&gt;  2 TEC    3.26 </span>
-<span class="co">#&gt;  3 SRC    2.36 </span>
-<span class="co">#&gt;  4 ABL    2.03 </span>
-<span class="co">#&gt;  5 PDGFR  1.89 </span>
-<span class="co">#&gt;  6 INSR   1.83 </span>
-<span class="co">#&gt;  7 FRK    1.83 </span>
-<span class="co">#&gt;  8 MET    0.945</span>
-<span class="co">#&gt;  9 SYK    0.930</span>
-<span class="co">#&gt; 10 CSK    0.912</span>
-<span class="co">#&gt; # … with 14 more rows</span></code></pre></div>
+<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> DDR    3.71 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> TEC    3.26 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> SRC    2.36 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> ABL    2.03 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> PDGFR  1.89 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> INSR   1.83 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> FRK    1.83 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> MET    0.945</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> SYK    0.930</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> CSK    0.912</span>
+<span class="co">#&gt; <span style="color: #949494;"># … with 14 more rows</span></span></code></pre></div>
 </div>
-<div id="uka-exmaple" class="section level2">
-<h2 class="hasAnchor">
-<a href="#uka-exmaple" class="anchor"></a>UKA Exmaple</h2>
+<div class="section level3">
+<h3 id="uka-exmaple">UKA Exmaple<a class="anchor" aria-label="anchor" href="#uka-exmaple"></a>
+</h3>
 <p>We do the same with the UKA output, take raw output and select kinase and either the kinase statistic or final score as the scoring metric</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="co"># reading an example of UKA output</span>
-<span class="va">uka_ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_delim</a></span><span class="op">(</span><span class="st">"data_files/UKA_ex.txt"</span>, delim <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span>
+<span class="va">uka_ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_delim</a></span><span class="op">(</span><span class="st">"data_files/UKA_ex.txt"</span>, delim <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span>
 
 <span class="va">uka_ex</span>
-<span class="co">#&gt; # A tibble: 76 × 10</span>
-<span class="co">#&gt;    `Kinase Uniprot ID` `Kinase Name` `Mean Specificity Score` `Mean Significanc…</span>
-<span class="co">#&gt;    &lt;chr&gt;               &lt;chr&gt;                            &lt;dbl&gt;              &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 P06239              Lck                              1.82                1.03</span>
-<span class="co">#&gt;  2 P07948              Lyn                              1.54                1.03</span>
-<span class="co">#&gt;  3 Q04912              Ron                              1.07                1.03</span>
-<span class="co">#&gt;  4 P42685              FRK                              1.30                1.03</span>
-<span class="co">#&gt;  5 P00519              Abl                              1.33                1.03</span>
-<span class="co">#&gt;  6 Q06418              Tyro3/Sky                        1.12                1.03</span>
-<span class="co">#&gt;  7 P12931              Src                              0.994               1.03</span>
-<span class="co">#&gt;  8 P16234              PDGFR[alpha]                     0.910               1.03</span>
-<span class="co">#&gt;  9 P42684              Arg                              0.959               1.03</span>
-<span class="co">#&gt; 10 P06241              Fyn                              1.04                1.03</span>
-<span class="co">#&gt; # … with 66 more rows, and 6 more variables: Mean Final Score &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Median Final score &lt;dbl&gt;, Mean Kinase Statistic &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Median Kinase Statistic &lt;dbl&gt;, SD Kinase Statitistic &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Mean peptide set size &lt;dbl&gt;</span></code></pre></div>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 76 × 10</span></span>
+<span class="co">#&gt;    `Kinase Uniprot ID` `Kinase Name` `Mean Specificity Score` `Mean Significan…`</span>
+<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> P06239              Lck                              1.82                1.03</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> P07948              Lyn                              1.54                1.03</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Q04912              Ron                              1.07                1.03</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> P42685              FRK                              1.30                1.03</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> P00519              Abl                              1.33                1.03</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Q06418              Tyro3/Sky                        1.12                1.03</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> P12931              Src                              0.994               1.03</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> P16234              PDGFR[alpha]                     0.910               1.03</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> P42684              Arg                              0.959               1.03</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> P06241              Fyn                              1.04                1.03</span>
+<span class="co">#&gt; <span style="color: #949494;"># … with 66 more rows, and 6 more variables: `Mean Final Score` &lt;dbl&gt;,</span></span>
+<span class="co">#&gt; <span style="color: #949494;">#   `Median Final score` &lt;dbl&gt;, `Mean Kinase Statistic` &lt;dbl&gt;,</span></span>
+<span class="co">#&gt; <span style="color: #949494;">#   `Median Kinase Statistic` &lt;dbl&gt;, `SD Kinase Statitistic` &lt;dbl&gt;,</span></span>
+<span class="co">#&gt; <span style="color: #949494;">#   `Mean peptide set size` &lt;dbl&gt;</span></span></code></pre></div>
 <p>Let’s say we want the final score as the metric we want to use, so we select the two columns: kinase and median final score</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="co"># selecting the Kinase and kinase statistic columns, and renaming kinase statistic to Score</span>
-<span class="va">uka_ex</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">`Kinase Name`</span>, <span class="va">`Median Final score`</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>Kinase <span class="op">=</span> <span class="va">`Kinase Name`</span>, Score <span class="op">=</span> <span class="va">`Median Final score`</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">uka_ex</span>
+<span class="va">uka_ex</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">`Kinase Name`</span>, <span class="va">`Median Final score`</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>Kinase <span class="op">=</span> <span class="va">`Kinase Name`</span>, Score <span class="op">=</span> <span class="va">`Median Final score`</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">uka_ex</span>
 
 <span class="va">uka_ex</span>
-<span class="co">#&gt; # A tibble: 76 × 2</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 76 × 2</span></span>
 <span class="co">#&gt;    Kinase       Score</span>
-<span class="co">#&gt;    &lt;chr&gt;        &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 Lck           2.77</span>
-<span class="co">#&gt;  2 Lyn           2.52</span>
-<span class="co">#&gt;  3 Ron           2.50</span>
-<span class="co">#&gt;  4 FRK           2.35</span>
-<span class="co">#&gt;  5 Abl           2.29</span>
-<span class="co">#&gt;  6 Tyro3/Sky     2.19</span>
-<span class="co">#&gt;  7 Src           2.07</span>
-<span class="co">#&gt;  8 PDGFR[alpha]  2.06</span>
-<span class="co">#&gt;  9 Arg           1.97</span>
-<span class="co">#&gt; 10 Fyn           1.95</span>
-<span class="co">#&gt; # … with 66 more rows</span></code></pre></div>
+<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Lck           2.77</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Lyn           2.52</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Ron           2.50</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> FRK           2.35</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Abl           2.29</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Tyro3/Sky     2.19</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Src           2.07</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> PDGFR[alpha]  2.06</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Arg           1.97</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Fyn           1.95</span>
+<span class="co">#&gt; <span style="color: #949494;"># … with 66 more rows</span></span></code></pre></div>
 </div>
-<div id="using-the-creedenzymatic-package" class="section level2">
-<h2 class="hasAnchor">
-<a href="#using-the-creedenzymatic-package" class="anchor"></a>Using the creedenzymatic package</h2>
+<div class="section level3">
+<h3 id="using-the-creedenzymatic-package">Using the creedenzymatic package<a class="anchor" aria-label="anchor" href="#using-the-creedenzymatic-package"></a>
+</h3>
 <p>There are dedicated functions to read and rank KRSA and UKA tables in the creedenzymatic package (<em>read_krsa, read_uka</em>). These two functions will check the input format (must include two columns: Kinase and Score) and then will the <em>rank_kinases</em> function with the specified arguments. The argument are <em>trns</em> and <em>sort</em>. The <em>trns</em> argument is for transformation of the score, the values accepted for this argument are abs and raw (abs: use absolute values of scores, raw: no transformation). The <em>sort</em> argument accepts either asc or desc (ascending and descending)</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -221,20 +217,20 @@
 
 <span class="co"># preview of a ranked KRSA table</span>
 <span class="va">krsa_table_ranked</span>
-<span class="co">#&gt; # A tibble: 24 × 6</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 24 × 6</span></span>
 <span class="co">#&gt;    Kinase Score  Rank Method  Perc   Qrt</span>
-<span class="co">#&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 DDR    3.71      1 KRSA   1         4</span>
-<span class="co">#&gt;  2 TEC    3.26      2 KRSA   0.957     4</span>
-<span class="co">#&gt;  3 SRC    2.36      3 KRSA   0.913     4</span>
-<span class="co">#&gt;  4 ABL    2.03      4 KRSA   0.870     4</span>
-<span class="co">#&gt;  5 PDGFR  1.89      5 KRSA   0.826     4</span>
-<span class="co">#&gt;  6 INSR   1.83      6 KRSA   0.783     4</span>
-<span class="co">#&gt;  7 FRK    1.83      7 KRSA   0.739     3</span>
-<span class="co">#&gt;  8 MET    0.945     8 KRSA   0.696     3</span>
-<span class="co">#&gt;  9 SYK    0.930     9 KRSA   0.652     3</span>
-<span class="co">#&gt; 10 CSK    0.912    10 KRSA   0.609     3</span>
-<span class="co">#&gt; # … with 14 more rows</span></code></pre></div>
+<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> DDR    3.71      1 KRSA   1         4</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> TEC    3.26      2 KRSA   0.957     4</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> SRC    2.36      3 KRSA   0.913     4</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> ABL    2.03      4 KRSA   0.870     4</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> PDGFR  1.89      5 KRSA   0.826     4</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> INSR   1.83      6 KRSA   0.783     4</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> FRK    1.83      7 KRSA   0.739     3</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> MET    0.945     8 KRSA   0.696     3</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> SYK    0.930     9 KRSA   0.652     3</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> CSK    0.912    10 KRSA   0.609     3</span>
+<span class="co">#&gt; <span style="color: #949494;"># … with 14 more rows</span></span></code></pre></div>
 <p>Now we combine the ranked tables into one dataframe using the combine_tools() function.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -243,20 +239,20 @@
 
 
 <span class="va">combined_df</span>
-<span class="co">#&gt; # A tibble: 151 × 10</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 151 × 10</span></span>
 <span class="co">#&gt;    Kinase       Score  Rank Method  Perc   Qrt hgnc_symbol group KinaseFamily</span>
-<span class="co">#&gt;    &lt;chr&gt;        &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;       </span>
-<span class="co">#&gt;  1 LCK           2.77     1 UKA    1         4 LCK         TK    SRC         </span>
-<span class="co">#&gt;  2 LYN           2.52     2 UKA    0.987     4 LYN         TK    SRC         </span>
-<span class="co">#&gt;  3 RON           2.50     3 UKA    0.973     4 MST1R       TK    MET         </span>
-<span class="co">#&gt;  4 FRK           2.35     4 UKA    0.96      4 FRK         TK    SRC         </span>
-<span class="co">#&gt;  5 ABL           2.29     5 UKA    0.947     4 ABL1        TK    ABL         </span>
-<span class="co">#&gt;  6 TYRO3/SKY     2.19     6 UKA    0.933     4 TYRO3       TK    AXL         </span>
-<span class="co">#&gt;  7 SRC           2.07     7 UKA    0.92      4 SRC         TK    SRC         </span>
-<span class="co">#&gt;  8 PDGFR[ALPHA]  2.06     8 UKA    0.907     4 PDGFRA      TK    PDGFR       </span>
-<span class="co">#&gt;  9 ARG           1.97     9 UKA    0.893     4 ABL2        TK    ABL         </span>
-<span class="co">#&gt; 10 FYN           1.95    10 UKA    0.88      4 FYN         TK    SRC         </span>
-<span class="co">#&gt; # … with 141 more rows, and 1 more variable: subfamily &lt;chr&gt;</span>
+<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> LCK           2.77     1 UKA    1         4 LCK         TK    SRC         </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> LYN           2.52     2 UKA    0.987     4 LYN         TK    SRC         </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> RON           2.50     3 UKA    0.973     4 MST1R       TK    MET         </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> FRK           2.35     4 UKA    0.96      4 FRK         TK    SRC         </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> ABL           2.29     5 UKA    0.947     4 ABL1        TK    ABL         </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> TYRO3/SKY     2.19     6 UKA    0.933     4 TYRO3       TK    AXL         </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> SRC           2.07     7 UKA    0.92      4 SRC         TK    SRC         </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> PDGFR[ALPHA]  2.06     8 UKA    0.907     4 PDGFRA      TK    PDGFR       </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> ARG           1.97     9 UKA    0.893     4 ABL2        TK    ABL         </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> FYN           1.95    10 UKA    0.88      4 FYN         TK    SRC         </span>
+<span class="co">#&gt; <span style="color: #949494;"># … with 141 more rows, and 1 more variable: subfamily &lt;chr&gt;</span></span>
 
 <span class="co"># to save file</span>
 <span class="co"># write_delim(combined_df,"ce_combined_ranked_file.txt", delim = "\t")</span></code></pre></div>
@@ -265,47 +261,47 @@
 <code class="sourceCode R">
 <span class="co"># filter out kinases found in quartile 3 or 4 either in KRSA or UKA and use the quartile_figure() for visualization</span>
 
-<span class="va">combined_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Qrt</span> <span class="op">&gt;=</span> <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">hgnc_symbol</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">sig_kinases</span>
+<span class="va">combined_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Qrt</span> <span class="op">&gt;=</span> <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">hgnc_symbol</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">sig_kinases</span>
 
-<span class="va">combined_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">hgnc_symbol</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">sig_kinases</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+<span class="va">combined_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">hgnc_symbol</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">sig_kinases</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/quartile_figure.html">quartile_figure</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="creedenzymatic_files/figure-html/unnamed-chunk-4-1.png" width="1152" style="display: block; margin: auto;"></p>
 </div>
 </div>
-<div id="kea3" class="section level1">
-<h1 class="hasAnchor">
-<a href="#kea3" class="anchor"></a>KEA3</h1>
+<div class="section level2">
+<h2 id="kea3">KEA3<a class="anchor" aria-label="anchor" href="#kea3"></a>
+</h2>
 <p>To run KEA3, we need a subset of peptides as an input (this subset of peptides could represent top differentially phosphorylated peptides, peptides mapped to a recombinant kinase, … etc). Both KRSA and UKA calculate log2 fold change (LFC) values of peptide phosphorylation levels. These LFC values could be used to determine the top peptides using either an LFC cutoff or rank order of peptides.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="co"># an example of file with peptide IDs and LFC</span>
-<span class="va">kea_ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_delim</a></span><span class="op">(</span><span class="st">"data_files/KEA3_ex.txt"</span>, delim <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span>
+<span class="va">kea_ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_delim</a></span><span class="op">(</span><span class="st">"data_files/KEA3_ex.txt"</span>, delim <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span>
 
-<span class="va">kea_ex</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Peptide</span>, Score <span class="op">=</span> <span class="va">totalMeanLFC</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">kea_ex</span>
+<span class="va">kea_ex</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Peptide</span>, Score <span class="op">=</span> <span class="va">totalMeanLFC</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">kea_ex</span>
 
 <span class="co"># run kea3, using the peptide list with a cutoff value</span>
 <span class="fu"><a href="../reference/read_kea.html">read_kea</a></span><span class="op">(</span><span class="va">kea_ex</span>, filter <span class="op">=</span> <span class="cn">T</span>, cutoff <span class="op">=</span> <span class="fl">0.4</span>, cutoff_abs <span class="op">=</span> <span class="cn">T</span>, sort <span class="op">=</span> <span class="st">"asc"</span>, trns <span class="op">=</span> <span class="st">"abs"</span>,
         rm_duplicates <span class="op">=</span> <span class="cn">T</span>, method <span class="op">=</span> <span class="st">"MeanRank"</span>, lib <span class="op">=</span> <span class="st">"kinase-substrate"</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">kea_table_ranked</span>
 
 <span class="co"># quartile figure using kinase family as the grouping factor</span>
-<span class="fu"><a href="../reference/combine_tools.html">combine_tools</a></span><span class="op">(</span>KRSA_df <span class="op">=</span> <span class="va">krsa_table_ranked</span>, UKA_df <span class="op">=</span> <span class="va">uka_table_ranked</span>, KEA3_df <span class="op">=</span> <span class="va">kea_table_ranked</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">hgnc_symbol</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">sig_kinases</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+<span class="fu"><a href="../reference/combine_tools.html">combine_tools</a></span><span class="op">(</span>KRSA_df <span class="op">=</span> <span class="va">krsa_table_ranked</span>, UKA_df <span class="op">=</span> <span class="va">uka_table_ranked</span>, KEA3_df <span class="op">=</span> <span class="va">kea_table_ranked</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">hgnc_symbol</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">sig_kinases</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/quartile_figure.html">quartile_figure</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="creedenzymatic_files/figure-html/unnamed-chunk-5-1.png" width="1152" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="co"># quartile figure using kinase groups as the grouping factor (more useful in STK runs)</span>
-<span class="fu"><a href="../reference/combine_tools.html">combine_tools</a></span><span class="op">(</span>KRSA_df <span class="op">=</span> <span class="va">krsa_table_ranked</span>, UKA_df <span class="op">=</span> <span class="va">uka_table_ranked</span>, KEA3_df <span class="op">=</span> <span class="va">kea_table_ranked</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">hgnc_symbol</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">sig_kinases</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+<span class="fu"><a href="../reference/combine_tools.html">combine_tools</a></span><span class="op">(</span>KRSA_df <span class="op">=</span> <span class="va">krsa_table_ranked</span>, UKA_df <span class="op">=</span> <span class="va">uka_table_ranked</span>, KEA3_df <span class="op">=</span> <span class="va">kea_table_ranked</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">hgnc_symbol</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">sig_kinases</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/quartile_figure.html">quartile_figure</a></span><span class="op">(</span>grouping <span class="op">=</span> <span class="st">"group"</span><span class="op">)</span></code></pre></div>
 <p><img src="creedenzymatic_files/figure-html/unnamed-chunk-5-2.png" width="1152" style="display: block; margin: auto;"></p>
 </div>
-<div id="ptm-sea" class="section level1">
-<h1 class="hasAnchor">
-<a href="#ptm-sea" class="anchor"></a>PTM-SEA</h1>
+<div class="section level2">
+<h2 id="ptm-sea">PTM-SEA<a class="anchor" aria-label="anchor" href="#ptm-sea"></a>
+</h2>
 <p>To run PTM-SEA, we need the LFC table of peptides as an input (Same input as KEA3)</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -315,8 +311,8 @@
 
 <span class="co"># quartile figure using kinase family as the grouping factor</span>
 <span class="fu"><a href="../reference/combine_tools.html">combine_tools</a></span><span class="op">(</span>KRSA_df <span class="op">=</span> <span class="va">krsa_table_ranked</span>, UKA_df <span class="op">=</span> <span class="va">uka_table_ranked</span>, 
-              KEA3_df <span class="op">=</span> <span class="va">kea_table_ranked</span>, PTM_SEA_df <span class="op">=</span><span class="va">ptm_table_ranked</span> <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">hgnc_symbol</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">sig_kinases</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+              KEA3_df <span class="op">=</span> <span class="va">kea_table_ranked</span>, PTM_SEA_df <span class="op">=</span><span class="va">ptm_table_ranked</span> <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">hgnc_symbol</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">sig_kinases</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/quartile_figure.html">quartile_figure</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="creedenzymatic_files/figure-html/unnamed-chunk-6-1.png" width="1152" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -344,11 +340,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Khaled Alganem, Justin Creeden, Ali Imami.</p>
+  <p></p>
+<p>Developed by Khaled Alganem, Justin Creeden, Ali Sajid Imami.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -356,6 +354,8 @@
 
   
 
+
+  
 
   </body>
 </html>
