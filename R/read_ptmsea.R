@@ -29,6 +29,7 @@ read_ptmsea <- function(df, ...) {
     dplyr::left_join(rbind(stk_pamchip_87102_array_layout_ptmsea, ptk_pamchip_86402_array_layout_ptmsea),
                      by = c("Peptide" = "ID")) %>%
     dplyr::select(PTM_SEA_ID, Score) %>% distinct(PTM_SEA_ID, .keep_all = T) %>%
+    dplyr::filter(!is.na(PTM_SEA_ID)) %>%
     tibble::column_to_rownames("PTM_SEA_ID") %>%
     as.matrix() -> mat_ds
 
