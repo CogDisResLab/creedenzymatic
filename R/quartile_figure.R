@@ -16,7 +16,7 @@ quartile_figure <- function(df, grouping = "KinaseFamily") {
   df %>%
     dplyr::select(hgnc_symbol, one_of(grouping), Qrt, Method) %>%
     tidyr::pivot_wider(names_from = Method, values_from = Qrt) %>%
-    tidyr::pivot_longer(3:ncol(.), names_to = "Method", values_to = "Qrt", values_fn = unique) %>%
+    tidyr::pivot_longer(3:ncol(.), names_to = "Method", values_to = "Qrt") %>%
     dplyr::mutate(
       present = ifelse(is.na(Qrt), "No", "Yes"), Qrt = ifelse(present == "No", 2, Qrt),
       present = factor(present, levels = c("Yes", "No")),

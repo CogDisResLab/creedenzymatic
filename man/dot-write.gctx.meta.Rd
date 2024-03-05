@@ -25,8 +25,8 @@ Other GCTX parsing functions:
 \code{\link{.process_ids}()},
 \code{\link{.read.gctx.ids}()},
 \code{\link{.read.gctx.meta}()},
-\code{\link{.write.gctx}()},
-\code{\link{.write.gct}()}
+\code{\link{.write.gct}()},
+\code{\link{.write.gctx}()}
 }
 \concept{GCTX parsing functions}
 \keyword{internal}

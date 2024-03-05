@@ -20,13 +20,6 @@ rank_kinases(
 
 \item{tool, }{specifying the name of the tool}
 }
-\value{
-
-}
 \description{
 This function will scale the scores on a percentile and quartile scales
-}
-\examples{
-
-
 }
