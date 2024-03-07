@@ -13,7 +13,7 @@ Authors@R: c(
         role = c("aut")
     ),
     person("Abdul-Rizaq", "Hamoud", email = "abdul-rizaq.hamoud@rockets.utoledo.edu", role = c("aut")
-    ),
+    )
     )
 Description: Combine kinome results from KRSA and UKA and other tools A package for integrating upstream kinases analyses
 License: MIT + file LICENSE
