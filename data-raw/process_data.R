@@ -50,7 +50,7 @@ kinome_mp_file_v6 <- read_delim("data-raw/KinomeMapping/2024_03_07-creedenzymati
                                 na = c("N/A")) %>%
   mutate_at(c("group", "family", "subfamily", "krsa_id", "uka_id", "kea3_id", "ptmsea_id"), toupper) %>%
   filter(!is.na(hgnc_symbol)) %>%
-  mutate(subfamily = ifelse(subfamily == "N/A", family, subfamily)) %>%
+  mutate(subfamily = ifelse(is.na(subfamily), family, subfamily)) %>%
   mutate(kea3_id = ifelse(kea3_id == "NOT FOUND" | is.na(kea3_id), hgnc_symbol, kea3_id)) %>%
   filter(!is.na(hgnc_id))
 
@@ -227,10 +227,9 @@ ptm_sea_iptmnet_mapping_stk <- readLines("data-raw/PTM_SEA_DB/ptm_sea_iptmnet_ma
 
 # format O60934;S343-p
 ptk_pamchip_86402_array_layout %>%
-  separate_rows(Tyr, sep = ",") %>%
-  mutate(Tyr = paste0("Y", Tyr),
-         PTM_SEA_ID = paste0(UniprotAccession, ";", Tyr, "-p")) %>%
-  dplyr::select(ID, PTM_SEA_ID) -> ptk_pamchip_86402_array_layout_ptmsea
+  mutate(
+         PTM_SEA_ID = paste0(substrate_ac, ";", site_residue, "-p")) %>%
+  dplyr::select(substrate_ac, PTM_SEA_ID) -> ptk_pamchip_86402_array_layout_ptmsea
 
 
 stk_pamchip_87102_array_layout %>%
@@ -262,19 +261,19 @@ processedDB %>% filter(grepl("Kinase",head, ignore.case = T)) %>%
   ungroup() -> filterDBS_ptk
 
 
-filterDBS_ptk %>% mutate(ids = entry, ids = str_remove(ids, ";u")) %>%
-  filter(ids %in% ptk_pamchip_86402_array_layout_ptmsea$PTM_SEA_ID) %>%
-  select(head, entry) %>%
-  group_by(head) %>% mutate(len = n()) %>%
-  ungroup() %>%
-  group_by(head) %>%
-  mutate(entry = list(unique(entry))) %>% ungroup() %>%
-  distinct() %>%
-  select(head, entry, len) -> onlyChipPeps_dbs
+# filterDBS_ptk %>% mutate(ids = entry, ids = str_remove(ids, ";u"), ids = str_remove(ids, "-2")) %>%
+#   filter(ids %in% ptk_pamchip_86402_array_layout_ptmsea$PTM_SEA_ID) %>%
+#   select(head, entry) %>%
+#   group_by(head) %>% mutate(len = n()) %>%
+#   ungroup() %>%
+#   group_by(head) %>%
+#   mutate(entry = list(unique(entry))) %>% ungroup() %>%
+#   distinct() %>%
+#   select(head, entry, len) -> onlyChipPeps_dbs
 
-onlyChipPeps_dbs <- setNames(as.list(as.data.frame(t(onlyChipPeps_dbs))), onlyChipPeps_dbs$head)
+# onlyChipPeps_dbs <- setNames(as.list(as.data.frame(t(onlyChipPeps_dbs))), onlyChipPeps_dbs$head)
 
-cmapR::write_gmt(onlyChipPeps_dbs, "data-raw/PTM_SEA_DB/ptk_pamchip_86402_onlyChipPeps_dbs.gmt")
+# cmapR::write_gmt(onlyChipPeps_dbs, "data-raw/PTM_SEA_DB/ptk_pamchip_86402_onlyChipPeps_dbs.gmt")
 
 ptk_pamchip_86402_onlyChipPeps_dbs <- readLines("data-raw/PTM_SEA_DB/ptk_pamchip_86402_onlyChipPeps_dbs.gmt")
 
