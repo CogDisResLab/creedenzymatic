@@ -46,8 +46,16 @@ kinome_mp_file_v5 <- read_delim("data-raw/KinomeMapping/2021_07_09-creedenzymati
   mutate(subfamily = ifelse(subfamily == "N/A", family, subfamily)) %>%
   mutate(kea3_id = ifelse(kea3_id == "NOT FOUND" | is.na(kea3_id), hgnc_symbol, kea3_id))
 
+kinome_mp_file_v6 <- read_delim("data-raw/KinomeMapping/2024_03_07-creedenzymatic_map_AH-ASI_edits.txt", delim = "\t",
+                                na = c("N/A")) %>%
+  mutate_at(c("group", "family", "subfamily", "krsa_id", "uka_id", "kea3_id", "ptmsea_id"), toupper) %>%
+  filter(!is.na(hgnc_symbol)) %>%
+  mutate(subfamily = ifelse(subfamily == "N/A", family, subfamily)) %>%
+  mutate(kea3_id = ifelse(kea3_id == "NOT FOUND" | is.na(kea3_id), hgnc_symbol, kea3_id)) %>%
+  filter(!is.na(hgnc_id))
 
-kinome_mp_file <- kinome_mp_file_v5
+
+kinome_mp_file <- kinome_mp_file_v6
 
 
 # peptide to HGNC
@@ -58,14 +66,14 @@ stk_pamchip_87102_mapping <- read_delim("data-raw/Pamchips_Layout/2021_10_13-JFC
 ptk_pamchip_86402_mapping <- read_delim("data-raw/Pamchips_Layout/2021_10_13-JFC_complete-ptk_peptides_mapping.txt", delim = "\t") %>%
   select(ID, HGNC)
 
-setdiff(stk_peps, stk_pamchip_87102_mapping$ID)
+#setdiff(stk_peps, stk_pamchip_87102_mapping$ID)
 
 add_stk <- tibble::tibble(
   ID = c("H2B1B_ 27_40","E1A_ADE05_212_224"),
   HGNC = c("H2BC3", NA)
 )
 
-setdiff(ptk_peps, ptk_pamchip_86402_mapping$ID)
+#setdiff(ptk_peps, ptk_pamchip_86402_mapping$ID)
 
 add_ptk <- tibble::tibble(
   ID = c("CD3Z_147_159"),
@@ -106,7 +114,7 @@ ptk_pamchip_86402_array_layout <- readxl::read_xlsx("data-raw/Pamchips_Layout/86
   select(substrate_ac = UniprotAccession,
          site_residue,
          site_position = Tyr
-         ) %>% filter(position != "") -> iptm_format_ptk
+         ) %>% filter(site_position != "") -> iptm_format_ptk
 
 utils::write.table(iptm_format_ptk %>% filter(site_position != ""),
                    "data-raw/iptm_net_input_ptk_chip.csv", col.names = F, sep = "\t", quote = F, row.names = F)
@@ -149,11 +157,11 @@ ptm_sea_iptmnet_mapping_ptk <- readLines("data-raw/PTM_SEA_DB/ptm_sea_iptmnet_ma
 # iptm to gmt
 "O43561-2;Y226-p;u"
 
-iptm_res %>% select(enz_name, sub_id, site) %>%
+iptm_res_ptk %>% select(enz_name, sub_id, site) %>%
   mutate(entry = paste0(sub_id, ";", site, "-p;u")) %>%
   select(head = enz_name, entry) %>% View()
 
-setdiff(iptm_res$enz_name %>% unique(), kinome_mp_file$hgnc_symbol)
+setdiff(iptm_res_ptk$enz_name %>% unique(), kinome_mp_file$hgnc_symbol)
 
 
 ## STK iptment
@@ -309,6 +317,7 @@ usethis::use_data(uka_db_full,
                   kinome_mp_file_v3,
                   kinome_mp_file_v4,
                   kinome_mp_file_v5,
+                  kinome_mp_file_v6,
                   stk_pamchip_87102_mapping,
                   stk_pamchip_87102_array_layout_ptmsea,
                   ptk_pamchip_86402_mapping,
